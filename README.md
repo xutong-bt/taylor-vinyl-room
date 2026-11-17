@@ -1,47 +1,38 @@
-# Taylor Swift · Vinyl Room
+# Taylor Swift Vinyl Room
 
-A browser-based record gallery that turns ten Taylor Swift albums into an interactive WebGL carousel. Drag the collection into view, choose a record, and preview a track from that album in the iTunes catalog.
+An independent fan project that turns Taylor Swift’s album catalog into an interactive vinyl room. Explore the eras, listen to official previews, and build a collection you can turn into a poster.
 
-> **Gallery preview**  
-> A screenshot of the finished listening room will appear here.
-
-<!--
-To add a screenshot where the placeholder appears, upload
-docs/vinyl-room-preview.png and replace the placeholder above with:
-
-![The Vinyl Room, showing record sleeves arranged around a lit WebGL carousel](docs/vinyl-room-preview.png)
--->
+[Open the Vinyl Room](https://xutong-bt.github.io/taylor-vinyl-room/)
 
 ## Inside the room
 
-- **A real 3D carousel.** Ten modeled sleeves and vinyl discs orbit on a fixed-camera stage with warm and violet lighting. Browse with drag, touch, the scroll wheel, or the on-screen controls.
-- **Play from the collection.** Three.js raycasting selects a record. The disc spins as its preview plays, and the player shows the track name, progress, and pause control. The carousel advances when the preview ends, with playback capped at 30 seconds.
-- **Live iTunes catalog data.** The page requests album artwork and official preview URLs at runtime and links to the corresponding iTunes Store item. The repository bundles no audio files or album images.
-
-## Technology
-
-| Layer | Tools |
+| Area | What you can do |
 | --- | --- |
-| Scene | Three.js, WebGLRenderer, and Raycaster |
-| Interface | Semantic HTML, native CSS, and vanilla JavaScript |
-| Audio and artwork | HTML5 Audio and the iTunes Search API |
-| Delivery | A single static HTML file with a CDN import map |
+| **Home** | Drag through a Three.js carousel of 10 featured records, or browse them with the arrow controls. A 2D gallery is available if the 3D scene cannot start. |
+| **Player** | Play, pause, and replay available Apple previews in a player shared across the site. A preview stops when it ends or reaches 30 seconds. |
+| **Explore** | Search, filter, and sort 16 albums: 12 original studio albums and four Taylor’s Version re-recordings. |
+| **Album Detail** | Open a direct album link, browse the tracks returned by Apple, select an available preview, and follow the official Apple link when available. |
+| **My Collection** | Save favorite albums in this browser, see the collection breakdown, and filter or sort your library. |
+| **Share** | Export a collection poster as a PNG in portrait, square, or landscape format, or share a link to a snapshot. Recipients can view the snapshot before choosing whether to copy albums into their own collection. Native sharing is available on supported browsers. |
+
+## Built with
+
+- HTML, CSS, and vanilla JavaScript
+- Three.js and WebGL for the vinyl carousel
+- Apple iTunes API for album artwork, track metadata, and official previews
+- Canvas for poster export, localStorage for favorites, and URL fragments for navigation
+
+The site runs as a single HTML file and is hosted on GitHub Pages. This fan project is unaffiliated with Taylor Swift or Apple. Artwork and audio remain the property of their respective rights holders.
 
 ## Run locally
 
-1. Download this repository or clone it, then open a terminal in the folder containing `index.html`.
-2. Start a local server with Python 3.
+1. Download or clone the repository.
+2. Open a terminal in the folder that contains `index.html`.
+3. Run `python -m http.server 8000`.
+4. Open the local server at `http://localhost:8000/` in your browser.
 
-   ```sh
-   python -m http.server 8000
-   ```
+An internet connection is needed for Three.js, Apple artwork, and audio previews. The album catalog is bundled with the page.
 
-   On Windows, use `py -m http.server 8000` if `python` is unavailable. On macOS or Linux, `python3 -m http.server 8000` is another option.
+## Screenshots
 
-3. Open [localhost:8000](http://localhost:8000) in a WebGL-enabled browser. Click a record to start playback. Internet access is required for the Three.js CDN and Apple catalog requests.
-
-No build step, backend, API key, or package installation is required. To publish with GitHub Pages, set the source to **Deploy from a branch → main → /(root)**.
-
-## Media and attribution
-
-An independent fan project. Preview audio and cover artwork are provided courtesy of iTunes and are subject to Apple's promotional-content terms. The preview streams and artwork are separate from the project's source code. See [Apple's iTunes Search API terms](https://performance-partners.apple.com/search-api).
+Screenshots can be added here under `docs/screenshots/` once they are captured for this release.
