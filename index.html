@@ -13,29 +13,32 @@
 body{margin:0}
 button{font:inherit;color:inherit;cursor:pointer}
 button:focus-visible,a:focus-visible,canvas:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
-.room{position:relative;min-height:620px;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 49% 57%,#2a1931,#110d17 61%);}
+.room{display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:100vh;height:100dvh;overflow:hidden;background:radial-gradient(ellipse at 50% 65%,#2b1b31,#100b17 68%)}
+.stage{position:relative;min-width:0;min-height:0;overflow:hidden;isolation:isolate}
 #stage{position:absolute;inset:0}
 canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 canvas.dragging{cursor:grabbing}
 canvas.pickable{cursor:pointer}
-header{position:absolute;top:clamp(24px,5vh,56px);left:clamp(21px,6vw,96px);pointer-events:none}
-.eyebrow{display:flex;align-items:center;gap:11px;font-size:.69rem;letter-spacing:.20em;text-transform:uppercase;color:var(--rose);margin:0}
-.eyebrow::before{content:"";width:25px;height:1px;background:linear-gradient(90deg,#f8c3b100,#f8c3b1)}
-h1{font:400 clamp(3rem,7vw,7.3rem)/.92 "Iowan Old Style",Baskerville,Georgia,serif;letter-spacing:-.057em;margin:13px 0 9px;text-shadow:0 8px 28px #0b071480}
-header>p:last-child{margin:0;color:var(--muted);font-size:clamp(.79rem,1.25vw,.94rem);line-height:1.6}
-.source{position:absolute;right:clamp(18px,5vw,74px);top:clamp(24px,5vh,56px);font-size:.72rem;color:var(--muted);text-decoration:none;border-bottom:1px solid #ad82994f;padding-bottom:4px}
+.masthead{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:8px 16px;padding:max(clamp(14px,3vh,34px),env(safe-area-inset-top)) max(clamp(16px,5.8vw,104px),env(safe-area-inset-right)) clamp(6px,1.4vh,14px) max(clamp(16px,5.8vw,104px),env(safe-area-inset-left));background:linear-gradient(180deg,#1d1426,#110c18)}
+.eyebrow{display:flex;align-items:center;gap:9px;min-height:30px;font-size:.68rem;font-weight:600;letter-spacing:.19em;text-transform:uppercase;color:#f0c8a8;margin:0}
+.eyebrow::before{content:"";width:19px;height:19px;flex:none;border-radius:50%;background:radial-gradient(circle,#f4c5a9 0 12%,#25172b 14% 27%,transparent 30%),repeating-radial-gradient(circle,#483049 0 1px,#1c1224 2px 3px);box-shadow:inset 0 1px 1px #f4c5a991}
+.masthead-title{grid-column:1/-1}
+h1{font:400 clamp(3rem,8.3vh,6.1rem)/.94 "Iowan Old Style",Baskerville,Georgia,serif;letter-spacing:-.056em;margin:0;text-shadow:0 8px 28px #08060bb0}
+.masthead-title p{margin:clamp(6px,1vh,10px) 0 0;color:var(--muted);font-size:clamp(.77rem,1.1vw,.9rem);line-height:1.45}
+.source{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:0 9px;border-radius:7px;font-size:.72rem;color:var(--muted);text-decoration:none;background:#d9b0ca0b;box-shadow:inset 0 0 0 1px #d9b0ca28;white-space:nowrap}
 .source:hover{color:#fff}
-.credit{position:absolute;right:clamp(14px,3vw,40px);bottom:max(7px,env(safe-area-inset-bottom));margin:0;color:var(--muted);font-size:.62rem;pointer-events:none}
-.bottom{position:absolute;bottom:max(19px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(490px,calc(100% - 28px));display:flex;flex-direction:column;align-items:center;gap:13px;pointer-events:none}
-.navigation,.player{pointer-events:auto}
-.navigation{display:flex;align-items:center;gap:14px}
-.navigation button,.play{border:0;border-radius:50%;display:grid;place-items:center;width:38px;height:38px;background:linear-gradient(145deg,#dcbac733,#3d2f42a1);box-shadow:inset 0 1px #f4d8e834,0 8px 17px #08050b88}
-.navigation button:hover,.play:hover{background:#7a526e}
+.credit{margin:0;color:var(--muted);font-size:.62rem;line-height:1.25;text-align:center}
+.bottom{display:grid;justify-items:center;gap:clamp(5px,1vh,10px);padding:5px max(12px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));background:linear-gradient(180deg,#110c18,#191021 88%)}
+.navigation{display:flex;align-items:center;gap:12px}
+.navigation button,.play{border:0;border-radius:50%;display:grid;place-items:center;width:44px;height:44px;background:linear-gradient(150deg,#e8bacb29,#2b1e36dd);box-shadow:inset 0 1px #f4d8e846,0 5px 12px #08050b88;transition:background .18s,transform .18s,box-shadow .18s}
+.navigation button:not(:disabled):hover{background:#65445c;box-shadow:inset 0 1px #f4d8e846,0 5px 14px #7f4b7559}
+.navigation button:not(:disabled):active,.play:not(:disabled):active{transform:scale(.94)}
 button:disabled{opacity:.45;cursor:default}
 .counter{font-size:.73rem;letter-spacing:.16em;color:var(--muted);min-width:65px;text-align:center;font-variant-numeric:tabular-nums}
-.player{width:100%;border-radius:16px;display:grid;grid-template-columns:43px minmax(0,1fr) auto 40px;gap:clamp(7px,2vw,13px);align-items:center;padding:10px 12px;background:linear-gradient(116deg,#89657768,#2e2339df 62%,#392b44c7);backdrop-filter:blur(19px) saturate(130%);box-shadow:inset 0 1px #f4cbd746,inset 0 -1px #090610ad,0 14px 33px #090510aa}
+.player{width:min(100%,520px);border-radius:16px;display:grid;grid-template-columns:44px minmax(0,1fr) auto 44px;gap:6px clamp(8px,1.5vw,13px);align-items:center;padding:8px 11px;background:linear-gradient(116deg,#92657680,#34253fca 60%,#47314cd4);backdrop-filter:blur(19px) saturate(130%);box-shadow:inset 0 1px #f4cbd760,inset 0 -1px #090610ad,0 10px 28px #09051096}
+.store{display:grid;place-items:center;min-height:44px}
 .store img{display:block;height:30px;width:auto}
-.art{width:43px;height:43px;border-radius:8px;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle,#f5b5a3 0 13%,transparent 14%),repeating-radial-gradient(circle,#302034 0 2px,#201826 3px 4px);box-shadow:inset 0 1px #edc0d746}
+.art{width:44px;height:44px;border-radius:8px;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle,#f5b5a3 0 13%,transparent 14%),repeating-radial-gradient(circle,#302034 0 2px,#201826 3px 4px);box-shadow:inset 0 1px #edc0d746}
 .art img{width:100%;height:100%;object-fit:cover}
 .track{min-width:0}
 .track strong,.track small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -43,73 +46,1908 @@ button:disabled{opacity:.45;cursor:default}
 .track small{font-size:.68rem;color:#e6c1d3;margin-top:4px}
 .play{background:linear-gradient(145deg,#ffe2cd,#c993b2);color:#251727;font-size:.88rem;font-weight:700}
 .play:not(:disabled):hover{background:#ffe2cd}
-.progress{grid-column:1/-1;height:2px;width:100%;border-radius:10px;overflow:hidden;margin-top:-5px;background:#f0cfe525}
+.progress{grid-column:1/-1;height:2px;width:100%;border-radius:10px;overflow:hidden;background:#f0cfe53a}
 .progress span{display:block;width:0;height:100%;background:#f9c1a9}
-.notice{position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:min(90%,430px);margin:0;text-align:center;color:#f9ceda;line-height:1.75}
+.notice{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(90%,430px);margin:0;text-align:center;color:#f9ceda;line-height:1.75}
 .notice[hidden]{display:none}
-@media(max-width:1050px){.bottom{bottom:max(26px,calc(env(safe-area-inset-bottom) + 18px))}}
-@media(max-width:600px){.room{min-height:570px}header{top:24px}.eyebrow{font-size:.62rem}h1{font-size:clamp(3rem,13vw,4.5rem)}.source{top:27px;font-size:.66rem}.bottom{gap:8px}}
+.flat{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr);gap:10px;padding:6px clamp(12px,5vw,72px) 8px}
+.flat-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 auto;width:min(100%,940px);color:var(--muted);font-size:.77rem}
+.flat-retry,.cover-retry{min-height:44px;border:0;border-radius:9px;padding:0 11px;background:linear-gradient(150deg,#714b69,#36263f);color:#f8eef6;font-size:.74rem}
+.cover-retry{position:absolute;bottom:8px;right:clamp(12px,5vw,72px)}
+.flat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(142px,45%),1fr));align-content:start;gap:10px;overflow:auto;overscroll-behavior:contain;padding:4px;margin:0 auto;width:min(100%,940px)}
+.flat-card{min-width:0;padding:8px;border:1px solid #dab3cb2b;border-radius:12px;text-align:left;background:linear-gradient(140deg,#36263f,#1d1426);box-shadow:0 6px 14px #09051075}
+.flat-card[aria-current="true"]{border-color:#f7c3b3}
+.flat-card[aria-pressed="true"] .flat-name::after{content:" · 已选择";color:var(--rose)}
+.flat-cover{position:relative;display:grid;place-items:center;aspect-ratio:1;overflow:hidden;border-radius:7px;color:#201627;background:linear-gradient(145deg,#f5e9f441,#21102650),var(--cover);font:1.4rem Georgia,serif}
+.flat-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.flat-name{display:block;margin-top:7px;font-size:.77rem}
+[hidden]{display:none!important}
+.masthead-nav{display:flex;align-items:center;gap:4px}
+.masthead-nav a{display:grid;place-items:center;min-height:36px;padding:0 10px;border-radius:7px;text-decoration:none;color:var(--muted);font-size:.76rem;white-space:nowrap}
+.masthead-nav a[aria-current="page"]{color:#fff1e6;background:#e8adc71c;box-shadow:inset 0 0 0 1px #e8adc737}
+.masthead-nav a:hover{color:#fff}
+.masthead-nav .source{font-size:.68rem}
+.room[data-page="explore"] .masthead-title{display:none}
+.home-selection{position:absolute;bottom:8px;left:12px;right:12px;width:fit-content;max-width:calc(100% - 24px);margin:0 auto;padding:6px 10px;border-radius:8px;background:#1d1426e8;color:#e9c4d9;font-size:.71rem;text-align:center;pointer-events:none}
+.explore{min-height:0;overflow:auto;overscroll-behavior:contain;background:radial-gradient(ellipse at 16% 0%,#2b1a32 0%,#15101d 48%,#110c18 100%);scrollbar-color:#76556d #1e1527}
+.explore-wrap{width:min(100%,1250px);margin:0 auto;padding:clamp(18px,4vw,50px) clamp(14px,4vw,44px) 28px}
+.explore-kicker{margin:0 0 8px;color:#eac1a2;font-weight:700;font-size:.68rem;letter-spacing:.23em}
+.explore h2{font:400 clamp(2.5rem,6vw,5.25rem)/.96 "Iowan Old Style",Baskerville,Georgia,serif;letter-spacing:-.055em;color:#f7edf7;margin:0}
+.explore-lead{margin:9px 0 22px;color:#dec9da;font-size:clamp(.81rem,1.35vw,.97rem)}
+.explore-tools{display:grid;gap:8px 14px;grid-template-columns:minmax(0,1fr) auto;align-items:end}
+.explore-search{display:flex;align-items:center;min-width:0;border-radius:10px;background:#d6b1cb0c;box-shadow:inset 0 0 0 1px #d6b1cb33;backdrop-filter:blur(10px)}
+.explore-search:focus-within{box-shadow:inset 0 0 0 1px var(--rose)}
+.explore-search input{font:inherit;font-size:.9rem;color:#f8eef6;min-width:0;width:100%;height:44px;padding:0 12px;border:0;background:none;outline:0}
+.explore-search input::-webkit-search-cancel-button{display:none}
+.explore-search button{height:44px;flex:0 0 44px;background:none;border:0;color:#f7c3b3}
+.explore-filters{grid-column:1;display:flex;flex-wrap:wrap;gap:6px}
+.explore-filters button,.explore-sort{min-height:44px;padding:0 10px;border-radius:8px;border:1px solid #d6b1cb38;background:#25192d;color:#ebd9e7;font:inherit;font-size:.76rem}
+.explore-filters button[aria-pressed="true"]{border-color:#e7b5b0;background:#edc3b0;color:#251724;font-weight:650}
+.explore-sort{grid-column:2;grid-row:1 / 3}
+.explore-count{margin:12px 0;color:#ddc0d3;font-size:.77rem}
+.explore-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(10px,1.5vw,20px)}
+.album-card{min-width:0;display:flex;flex-direction:column;align-content:stretch;border:1px solid #e6bed72a;border-radius:12px;background:#21172a;overflow:hidden;transition:border-color .18s,box-shadow .18s}
+.album-card:hover{border-color:#e6bed75e;box-shadow:0 8px 20px #0c071288}
+.album-card[data-selected="true"]{border-color:#f7c3b3;box-shadow:0 0 0 1px #f7c3b34a}
+.album-pick{display:block;width:100%;padding:0;border:0;background:none;text-align:left;min-width:0;color:inherit}
+.album-pick:focus-visible,.album-info summary:focus-visible{outline-offset:-3px}
+.album-cover{position:relative;display:grid;place-items:center;aspect-ratio:1;overflow:hidden;color:#21162b;background:linear-gradient(145deg,#f5e9f441,#21102650),var(--cover,#a18a9c);font:1.7rem Georgia,serif}
+.album-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .24s}
+.album-pick:hover img{transform:scale(1.045)}
+.album-pick:active img{transform:scale(1.015)}
+.album-title{display:block;margin:10px 9px 0;font-size:clamp(.74rem,1.05vw,.93rem);font-weight:650;line-height:1.3;min-height:2.6em;overflow-wrap:anywhere}
+.album-meta{display:block;color:#ddbed0;font-size:.66rem;line-height:1.3;margin:5px 9px 7px;overflow-wrap:anywhere}
+.album-info{margin-top:auto;border-top:1px solid #e6bed71d;color:#e9cad9;font-size:.69rem}
+.album-info summary{cursor:pointer;min-height:36px;padding:10px 9px}
+.album-info p{margin:0 9px 11px;color:#e9d5e4;line-height:1.55}
+.explore-empty{padding:26px 12px;border:1px solid #e6bed72a;border-radius:12px;color:#e9cad9;text-align:center}
+.explore-end{margin-top:18px}
+.room[data-page="album"] .masthead-title{display:none}
+.room[data-page="collection"] .masthead-title{display:none}
+.room[data-page="share"] .masthead-title{display:none}
+.share-entry{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 16px}
+.share-note{margin:0;color:#ebc8db;font-size:.76rem;line-height:1.5}
+.share-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.share-caption{white-space:pre-wrap;overflow-wrap:anywhere}
+.share-dialog{width:min(860px,calc(100% - 20px));max-height:min(840px,calc(100dvh - 20px));padding:0;border:1px solid #e9bdc85a;border-radius:18px;background:#22172a;color:#f8eef6;box-shadow:0 20px 85px #050309d0;overflow:auto}
+.share-dialog::backdrop{background:#0a0612bd;backdrop-filter:blur(5px)}
+.share-dialog header{display:flex;align-items:start;justify-content:space-between;gap:12px;padding:18px 18px 10px}
+.share-dialog h2{margin:0 0 5px;font:400 clamp(1.65rem,4vw,2.7rem) Georgia,serif}
+.share-dialog .share-close{width:44px;padding:0;flex:none;font-size:1.4rem}
+.share-body{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr);align-items:start;gap:16px;padding:8px 18px 18px}
+.share-controls{min-width:0;display:grid;gap:8px}
+.share-controls label{font-size:.78rem;color:#ecd2e1}
+.share-controls textarea,.share-controls select,.share-controls input{width:100%;min-width:0;min-height:44px;padding:9px;border:1px solid #e6bed745;border-radius:8px;background:#17101f;color:#f8eef6;font:inherit;font-size:.82rem}
+.share-controls textarea{resize:vertical;min-height:78px}
+.poster-frame{display:grid;place-items:center;margin:0;padding:8px;border-radius:12px;background:#110d17;min-width:0}
+.poster-frame canvas{width:auto;height:auto;max-width:100%;max-height:min(460px,57dvh);touch-action:auto;cursor:auto}
+.share-dialog .share-actions{margin:3px 0}
+.share-dialog .detail-action{font-size:.76rem;padding:0 10px}
+@media(max-width:600px){
+ .share-dialog header{padding:12px 12px 6px}
+ .share-body{padding:6px 12px 14px;grid-template-columns:minmax(0,1fr);gap:10px}
+ .poster-frame{grid-row:1}
+ .poster-frame canvas{max-height:29dvh}
+}
+.source-short{display:none}
+.collection-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(5px,1.3vw,14px);margin:0 0 18px}
+.collection-stats div{min-width:0;padding:clamp(8px,2.1vw,18px);border-radius:11px;border:1px solid #e6bed72d;background:linear-gradient(140deg,#3a2945,#251a2e)}
+.collection-stats dt{font-size:clamp(.61rem,1.25vw,.85rem);color:#e7c8da;line-height:1.3}
+.collection-stats dd{margin:5px 0 0;font:1.5rem Georgia,serif;color:#ffdfcc;font-variant-numeric:tabular-nums}
+.collection-empty{padding:clamp(20px,4vw,40px);border:1px solid #e6bed72d;border-radius:13px;background:#261b30}
+.collection-empty h3{font:400 clamp(1.45rem,3vw,2.25rem) Georgia,serif;margin:0}
+.collection-empty p,.storage-note{color:#e5c7db;font-size:.8rem;line-height:1.6}
+.storage-note{margin:0 0 14px;color:#ffe4b9}
+.bottom .storage-note{margin:0;text-align:center;font-size:.68rem}
+.album-card{position:relative}
+.favorite{display:inline-grid;place-items:center;min-width:44px;min-height:44px;padding:0 10px;border-radius:9px;border:1px solid #f3c6da65;color:#fff2f7;background:#2c2035;font:1.1rem Georgia,serif}
+.album-card>.favorite{position:absolute;top:7px;right:7px;box-shadow:0 4px 12px #0c0813a6}
+.favorite[aria-pressed="true"]{background:#edc3b0;color:#271729;border-color:#edc3b0}
+.favorite:hover{outline:1px solid var(--rose)}
+.favorite:focus-visible{outline-offset:1px}
+.favorite-label{font:inherit;font-size:.75rem;margin-left:6px}
+.detail-actions>.favorite{display:inline-flex}
+.collection-tracks{border-top:1px solid #e6bed71d;padding:0 8px 7px;color:#e9cad9;font-size:.76rem}
+.collection-tracks summary{display:list-item;min-height:44px;padding:12px 1px;cursor:pointer}
+.collection-track-list{display:grid;gap:4px;max-height:182px;overflow:auto}
+.collection-track-list button{min-height:44px;padding:6px 8px;border:1px solid #e6bed72b;border-radius:7px;background:#2c1f36;text-align:left;overflow-wrap:anywhere}
+.collection-track-list button[aria-pressed="true"]{border-color:var(--rose);color:#ffe2d2}
+@media(max-width:600px){
+ .masthead-nav{gap:2px}
+ .masthead .masthead-nav a{padding-inline:4px}
+ .source-full{display:none}.source-short{display:inline}
+ .masthead .eyebrow{letter-spacing:.10em}
+ .masthead .eyebrow::before{width:15px;height:15px}
+}
+.album-card .album-info{display:flex;align-items:center;min-height:44px;padding:8px 9px;width:100%;text-align:left;background:none;border:0;border-top:1px solid #e6bed71d;color:#e9cad9}
+.album-card .album-pick{text-decoration:none}
+.album-card .album-info:hover{color:var(--rose);background:#ffd3e60c}
+.detail{background:radial-gradient(ellipse at 10% 4%,#37223e,#181120 52%,#110c18)}
+.detail-wrap{width:min(100%,1120px);margin:auto;padding:clamp(16px,4vw,50px) clamp(14px,4vw,40px) 32px}
+.detail-back{display:inline-flex;align-items:center;min-height:44px;color:#ebc3b8;text-decoration:none;font-size:.84rem}
+.detail-back:hover{text-decoration:underline}
+.detail-hero{display:grid;grid-template-columns:minmax(0,.70fr) minmax(0,1fr);gap:clamp(16px,4vw,54px);align-items:center;margin:8px 0 clamp(23px,4vw,40px)}
+.detail-cover{width:100%;max-width:360px;border-radius:14px;box-shadow:0 15px 38px #0a0611a6;outline:1px solid #e9c1da40}
+.detail-cover img{transition:none}
+.detail-label{margin:0 0 8px;color:#eac1a2;font-size:.68rem;letter-spacing:.18em;font-weight:700}
+.detail h2{font-size:clamp(2.05rem,5.4vw,4.9rem);overflow-wrap:anywhere}
+.detail-meta{color:#e7c6d8;font-size:.83rem;line-height:1.65}
+.detail-intro{color:#f0ddec;font-size:.89rem;line-height:1.75}
+.detail-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.detail-action{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 14px;border-radius:9px;border:1px solid #e6bed75e;background:#2e2037;color:#f8edf5;text-decoration:none;font:inherit;font-size:.79rem}
+.detail-action:hover:not(:disabled){border-color:var(--rose);background:#4b3451}
+.detail-primary{background:#efc4b0;color:#261725;border-color:#efc4b0;font-weight:650}
+.detail-primary:hover:not(:disabled){background:#ffdfce;color:#261725}
+.track-section h3{font:400 clamp(1.5rem,3.2vw,2.5rem) Georgia,serif;margin:0 0 8px}
+.detail-status{color:#e7c6d8;font-size:.82rem;line-height:1.6}
+.detail-list{margin:12px 0 0;padding:0;list-style:none;border-top:1px solid #e6bed735}
+.detail-row{display:grid;grid-template-columns:2.35rem minmax(0,1fr) 3rem minmax(74px,auto);column-gap:8px;align-items:center;padding:7px 4px;border-bottom:1px solid #e6bed724;color:#e7ccdf;font-size:.76rem;min-width:0}
+.detail-row[data-selected="true"]{background:#e8adc720;box-shadow:inset 2px 0 #f3c1b4}
+.track-name{min-width:0;color:#fff1f9;font-size:.89rem;font-weight:600;overflow-wrap:anywhere}
+.track-duration{text-align:right;font-variant-numeric:tabular-nums}
+.track-select{min-height:44px;padding:0 8px;width:100%}
+.detail-missing{padding:20px 0}
+@media(max-width:600px){
+ .detail-hero{grid-template-columns:minmax(0,1fr)}
+ .detail-cover{width:min(100%,285px);margin-inline:auto}
+ .detail-row{grid-template-columns:1.6rem minmax(0,1fr) 2.4rem minmax(62px,auto);column-gap:5px}
+ .track-name{font-size:.79rem}
+ .track-select{padding-inline:5px;font-size:.68rem}
+}
+@media(max-width:1100px){.explore-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:860px){.explore-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){
+ .masthead-nav a{min-height:44px;padding:0 6px;font-size:.68rem}
+ .masthead-nav .source{font-size:.61rem;padding:0 5px}
+ .explore-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .explore-tools{grid-template-columns:minmax(0,1fr) auto}
+ .explore-search{grid-column:1/-1}
+ .explore-filters{grid-column:1/-1}
+ .explore-sort{grid-column:2;grid-row:3}
+ .explore-count{grid-column:1;grid-row:3;margin:0;align-self:center}
+}
+@media(min-width:601px){.explore-count{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){.album-card,.album-cover img{transition:none}.album-pick:hover img,.album-pick:active img{transform:none}}
+@media(max-width:600px){
+  .masthead{gap:5px 10px}
+  .eyebrow{font-size:.62rem;min-height:44px}
+  .source{min-height:44px;font-size:.67rem}
+  h1{font-size:clamp(2.65rem,11vw,4rem)}
+}
+@media(max-width:600px) and (max-height:600px){
+  .masthead{padding-top:max(6px,env(safe-area-inset-top));padding-bottom:6px}
+  .bottom{gap:4px;padding-top:3px}
+}
+@media(prefers-reduced-motion:reduce){
+  .navigation button,.play{transition:none}
+  .navigation button:not(:disabled):active,.play:not(:disabled):active{transform:none}
+}
 </style>
 </head>
 <body>
 <main class="room">
-  <div id="stage"></div>
-  <header>
+  <header class="masthead">
     <p class="eyebrow">The Vinyl Room</p>
-    <h1>Taylor Swift</h1>
-    <p>左右拖动展架 · 点击唱片试听</p>
+    <nav class="masthead-nav" aria-label="页面导航">
+      <a href="#home" id="nav-home" aria-current="page">Home</a>
+      <a href="#explore" id="nav-explore">Explore</a>
+      <a href="#collection" id="nav-collection">My Collection</a>
+      <a class="source" href="https://music.apple.com/us/artist/taylor-swift/159260351" target="_blank" rel="noopener" aria-label="封面来源"><span class="source-full">封面来源 ↗</span><span class="source-short" aria-hidden="true">↗</span></a>
+    </nav>
+    <div class="masthead-title">
+      <h1>Taylor Swift</h1>
+      <p>左右拖动展架 · 点击唱片试听</p>
+    </div>
   </header>
-  <a class="source" href="https://music.apple.com/us/artist/taylor-swift/159260351" target="_blank" rel="noopener">封面来源 ↗</a>
-  <p class="notice" id="notice" role="status">正在点亮听音室…</p>
-  <div class="bottom">
-    <nav class="navigation" aria-label="浏览唱片">
+  <section class="stage" id="home" aria-label="3D 唱片展区">
+    <div id="stage"></div>
+    <p class="notice" id="notice" role="status">正在点亮听音室…</p>
+    <p class="home-selection" id="home-selection" hidden></p>
+  </section>
+  <section class="explore" id="explore" aria-labelledby="explore-title" hidden>
+    <div class="explore-wrap">
+      <p class="explore-kicker">EXPLORE</p>
+      <h2 id="explore-title" tabindex="-1">Discover the Eras.</h2>
+      <p class="explore-lead">Explore Taylor Swift's musical journey.</p>
+      <div class="explore-tools">
+        <div class="explore-search">
+          <input type="search" id="album-search" placeholder="Search albums…" aria-label="Search albums">
+          <button type="button" id="clear-search" aria-label="Clear search" hidden>×</button>
+        </div>
+        <div class="explore-filters" role="group" aria-label="Album category">
+          <button type="button" data-category="all" aria-pressed="true">All Albums</button>
+          <button type="button" data-category="studio" aria-pressed="false">Studio Albums</button>
+          <button type="button" data-category="re-recorded" aria-pressed="false">Taylor's Version</button>
+        </div>
+        <select class="explore-sort" id="album-sort" aria-label="Sort albums">
+          <option value="default">Default Order</option>
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="az">A–Z</option>
+        </select>
+        <p class="explore-count" id="album-count" role="status"></p>
+      </div>
+      <div class="explore-grid" id="album-grid"></div>
+      <p class="explore-empty" id="album-empty" hidden>No albums match your search. Try a different title or category.</p>
+      <p class="explore-count explore-end" id="album-count-end"></p>
+    </div>
+  </section>
+  <section class="explore" id="collection" aria-labelledby="collection-title" hidden>
+    <div class="explore-wrap">
+      <p class="explore-kicker">MY COLLECTION</p>
+      <h2 id="collection-title" tabindex="-1">Your Music Universe.</h2>
+      <p class="explore-lead">A personal space for the albums you love.</p>
+      <dl class="collection-stats" aria-label="Collection statistics">
+        <div><dt>Total Albums</dt><dd id="collection-total">0</dd></div>
+        <div><dt>Studio Albums</dt><dd id="collection-studio">0</dd></div>
+        <div><dt>Taylor's Version</dt><dd id="collection-tv">0</dd></div>
+      </dl>
+      <p class="storage-note" id="collection-storage-note" role="status" hidden></p>
+      <div class="share-entry">
+        <button type="button" class="detail-action detail-primary" id="open-share" disabled>Share Collection</button>
+        <p class="share-note" id="share-empty-note">先收藏一张专辑，再生成分享海报或链接。</p>
+      </div>
+      <div id="collection-tools" class="explore-tools">
+        <div class="explore-search">
+          <input type="search" id="collection-search" placeholder="Search your collection…" aria-label="Search collection">
+          <button type="button" id="collection-clear" aria-label="Clear collection search" hidden>×</button>
+        </div>
+        <div class="explore-filters" role="group" aria-label="Collection category">
+          <button type="button" data-collection-category="all" aria-pressed="true">All Albums</button>
+          <button type="button" data-collection-category="studio" aria-pressed="false">Studio Albums</button>
+          <button type="button" data-collection-category="re-recorded" aria-pressed="false">Taylor's Version</button>
+        </div>
+        <select class="explore-sort" id="collection-sort" aria-label="Sort collection">
+          <option value="recent">Recently Added</option>
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="az">A–Z</option>
+        </select>
+        <p class="explore-count" id="collection-count" role="status"></p>
+      </div>
+      <div class="explore-grid" id="collection-grid"></div>
+      <p class="explore-empty" id="collection-no-results" hidden>No saved albums match your search or category.</p>
+      <div class="collection-empty" id="collection-empty">
+        <h3>Your collection is waiting.</h3>
+        <p>Discover the albums that make your music universe unique.</p>
+        <a href="#explore" class="detail-action detail-primary">Explore Albums</a>
+      </div>
+    </div>
+  </section>
+  <section class="explore" id="share" aria-labelledby="shared-title" hidden>
+    <div class="explore-wrap">
+      <p class="explore-kicker">VINYL ROOM / SHARED</p>
+      <h2 id="shared-title" tabindex="-1">Shared Music Collection.</h2>
+      <p class="explore-lead share-caption" id="shared-caption"></p>
+      <div class="share-actions">
+        <a class="detail-action" href="#explore">Explore</a>
+        <button type="button" class="detail-action detail-primary" id="import-share" hidden>Copy to My Collection</button>
+      </div>
+      <p class="detail-status" id="share-result" role="status"></p>
+      <div class="explore-grid" id="shared-grid"></div>
+    </div>
+  </section>
+  <section class="explore detail" id="album-detail" aria-labelledby="detail-title" hidden>
+    <div class="detail-wrap">
+      <a class="detail-back" id="detail-back" href="#explore">← Back to Explore</a>
+      <div class="detail-missing" id="detail-missing" hidden>
+        <h2 id="detail-missing-title" tabindex="-1">Album not found</h2>
+        <p class="detail-status">这个专辑链接无效。你可以返回 Explore 浏览完整目录。</p>
+      </div>
+      <div id="detail-content">
+        <div class="detail-hero">
+          <div class="album-cover detail-cover" id="detail-cover">TS</div>
+          <div>
+            <p class="detail-label" id="detail-version"></p>
+            <h2 id="detail-title" tabindex="-1"></h2>
+            <p class="detail-meta" id="detail-meta"></p>
+            <p class="detail-intro" id="detail-intro"></p>
+            <div class="detail-actions">
+              <button type="button" class="detail-action detail-primary" id="play-album" disabled>Play Album</button>
+              <a class="detail-action" id="detail-store" target="_blank" rel="noopener noreferrer">Open in Apple Music ↗</a>
+              <button class="favorite" type="button" id="detail-favorite" aria-pressed="false">♡</button>
+            </div>
+          </div>
+        </div>
+        <div class="track-section" aria-labelledby="track-list-title">
+          <h3 id="track-list-title">Tracklist</h3>
+          <p class="detail-status" id="detail-status" role="status"></p>
+          <button type="button" class="detail-action" id="detail-retry" hidden>重新加载曲目</button>
+          <ol class="detail-list" id="detail-list"></ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="bottom">
+    <nav class="navigation" id="home-navigation" aria-label="浏览唱片">
       <button type="button" id="prev" aria-label="上一张唱片" disabled>←</button>
       <span class="counter" id="counter">01 / 10</span>
       <button type="button" id="next" aria-label="下一张唱片" disabled>→</button>
     </nav>
     <section class="player" aria-label="迷你播放器">
-      <div class="art"><img id="art" alt="" hidden></div>
+      <div class="art"><img id="art" alt="" crossorigin="anonymous" hidden></div>
       <div class="track" aria-live="polite"><strong id="track">选择一张唱片</strong><small id="state">官方 iTunes 试听</small></div>
       <a id="store" class="store" href="https://itunes.apple.com/us/artist/taylor-swift/159260351" target="_blank" rel="noopener noreferrer"><img src="https://marketing.services.apple/api/storage/images/64e3de01fe821600071349d4/en-us-large%401x.png" alt="前往 iTunes Store"></a>
       <button type="button" class="play" id="play" aria-label="播放" disabled>▶</button>
       <div class="progress" aria-hidden="true"><span id="progress"></span></div>
     </section>
-  </div>
-  <p class="credit">音频与封面由 Apple iTunes API 提供，仅作技术演示</p>
+    <p class="credit">音频与封面由 Apple iTunes API 提供，仅作技术演示</p>
+    <p class="storage-note" id="storage-feedback" role="status" hidden></p>
+  </footer>
 </main>
+<dialog class="share-dialog" id="share-dialog" aria-labelledby="share-dialog-title">
+  <header>
+    <div><h2 id="share-dialog-title">Share your collection.</h2><p class="share-note" id="share-count"></p></div>
+    <form method="dialog"><button type="submit" class="detail-action share-close" aria-label="关闭分享">×</button></form>
+  </header>
+  <div class="share-body">
+    <div class="share-controls">
+      <label for="poster-size">海报尺寸</label>
+      <select id="poster-size"><option value="1080x1350">1080 × 1350</option><option value="1080x1080">1080 × 1080</option><option value="1200x630">1200 × 630</option></select>
+      <label for="share-caption">个性文案（最多 100 字符）</label>
+      <textarea id="share-caption" rows="2" maxlength="100">My Music Universe.
+Collected with love, played with memories.</textarea>
+      <div class="share-actions">
+        <button type="button" class="detail-action detail-primary" id="download-poster">Download Poster</button>
+        <button type="button" class="detail-action" id="copy-share">Copy Link</button>
+        <button type="button" class="detail-action" id="native-share" hidden>Share…</button>
+      </div>
+      <label for="share-url">分享链接</label>
+      <input id="share-url" type="url" readonly>
+      <p class="share-note" id="share-host-note"></p>
+      <p class="detail-status" id="share-action-status" role="status"></p>
+    </div>
+    <figure class="poster-frame"><canvas id="poster-canvas" aria-label="收藏海报预览"></canvas></figure>
+  </div>
+</dialog>
 <script type="module">
 const $ = id => document.getElementById(id);
 const notice = $('notice');
 
-try {
-  const THREE = await import('three');
-  init(THREE);
-} catch (error) {
-  console.error(error);
-  notice.hidden = false;
-  notice.textContent = '3D 场景启动失败。请检查网络，并在启用 WebGL 的新版浏览器中重试。';
+// Canonical catalog: identifiers belong to this project; Apple IDs are provider metadata.
+const albumCatalog = Object.freeze([
+  { id: "taylor-swift-2006", title: "Taylor Swift", originalTitle: "Taylor Swift", releaseYear: 2006,
+    category: "studio", era: "taylor-swift", collectionId: 1860454442, officialUrl: 'https://music.apple.com/us/album/taylor-swift/1860454442', featured: false, color: null,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d0/f1/e0/d0f1e04e-a58c-7dc8-15d2-79c62dd94e5a/06PNDIM00825.rgb.jpg/600x600bb.jpg",
+    description: "以乡村音乐为底色的首张同名专辑，收录 Tim McGraw 和 Our Song。" },
+  { id: "fearless-2008", title: "Fearless", originalTitle: "Fearless", releaseYear: 2008,
+    category: "studio", era: "fearless", collectionId: 1440924803, officialUrl: 'https://music.apple.com/us/album/fearless/1440924803', featured: true, color: 0xc18b4f,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/cb/6e/a7/cb6ea70a-6cb8-89a0-4da7-91e2d04a7bba/08PNDIM05386.rgb.jpg/600x600bb.jpg",
+    description: "以乡村流行讲述青春与初恋，收录 Love Story 和 You Belong With Me。" },
+  { id: "speak-now-2010", title: "Speak Now", originalTitle: "Speak Now", releaseYear: 2010,
+    category: "studio", era: "speak-now", collectionId: 1440920310, officialUrl: 'https://music.apple.com/us/album/speak-now/1440920310', featured: true, color: 0x926fb5,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d4/23/57/d423579f-24f7-5c82-ed10-fbfd21ceef25/10UMDIM00487.rgb.jpg/600x600bb.jpg",
+    description: "由 Taylor Swift 独立创作的录音室专辑，收录 Enchanted、Dear John 和 Long Live。" },
+  { id: "red-2012", title: "Red", originalTitle: "Red", releaseYear: 2012,
+    category: "studio", era: "red", collectionId: 1440935340, officialUrl: 'https://music.apple.com/us/album/red/1440935340', featured: true, color: 0xb93c54,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/25/0d/7e/250d7e42-3a2f-19ac-f865-f1e04a4a1f97/12UMDIM01007.rgb.jpg/600x600bb.jpg",
+    description: "横跨乡村、流行与摇滚的第四张录音室专辑，收录 All Too Well 和 State of Grace。" },
+  { id: "1989-2014", title: "1989", originalTitle: "1989", releaseYear: 2014,
+    category: "studio", era: "1989", collectionId: 1445888258, officialUrl: 'https://music.apple.com/us/album/1989/1440935467', featured: true, color: 0x86b3c1,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/89/4a/4a/894a4ab9-b0b0-9ea5-ca41-8da0b9b79453/14UMDIM03405.rgb.jpg/600x600bb.jpg",
+    description: "以合成器流行为主，收录 Blank Space、Style 和 Shake It Off。", appleCollectionAliases: Object.freeze([1440935467]) },
+  { id: "reputation-2017", title: "reputation", originalTitle: "reputation", releaseYear: 2017,
+    category: "studio", era: "reputation", collectionId: 1440933849, officialUrl: 'https://music.apple.com/us/album/reputation/1440933849', featured: true, color: 0xa3a0b4,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/eb/e6/06/ebe606da-e00f-82d3-47f3-b79904eed541/17UM1IM24651.rgb.jpg/600x600bb.jpg",
+    description: "以电子流行制作探讨公众形象与亲密关系，收录 Delicate 和 Look What You Made Me Do。" },
+  { id: "lover-2019", title: "Lover", originalTitle: "Lover", releaseYear: 2019,
+    category: "studio", era: "lover", collectionId: 1468058165, officialUrl: 'https://music.apple.com/us/album/lover/1468058165', featured: true, color: 0xd796b5,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/49/3d/ab/493dab54-f920-9043-6181-80993b8116c9/19UMGIM53909.rgb.jpg/600x600bb.jpg",
+    description: "以爱与人际关系为主题的流行专辑，收录 Lover、Cruel Summer 和 The Archer。" },
+  { id: "folklore-2020", title: "folklore", originalTitle: "folklore", releaseYear: 2020,
+    category: "studio", era: "folklore", collectionId: 1524801260, officialUrl: 'https://music.apple.com/us/album/folklore/1524801260', featured: true, color: 0xbdb5a7,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/ca/f3/67/caf367a5-2cf6-6b2e-a891-97dc57b19f08/20UMGIM64216.rgb.jpg/600x600bb.jpg",
+    description: "带有独立民谣色彩的叙事专辑，收录 cardigan 和与 Bon Iver 合作的 exile。" },
+  { id: "evermore-2020", title: "evermore", originalTitle: "evermore", releaseYear: 2020,
+    category: "studio", era: "evermore", collectionId: 1544275966, officialUrl: 'https://music.apple.com/us/album/evermore/1544275966', featured: true, color: 0xb87c60,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/82/33/6e/82336ed3-3d1b-e920-b0a7-61775acd0f33/20UM1IM14847.rgb.jpg/600x600bb.jpg",
+    description: "延续 folklore 的创作方向，收录 willow 和与 Bon Iver 合作的同名曲。" },
+  { id: "midnights-2022", title: "Midnights", originalTitle: "Midnights", releaseYear: 2022,
+    category: "studio", era: "midnights", collectionId: 1645937249, officialUrl: 'https://music.apple.com/us/album/midnights/1645937249', featured: true, color: 0x748ec8,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/11/33/de/1133deee-070e-98d3-950a-2269807b074e/22UM1IM24801.rgb.jpg/600x600bb.jpg",
+    description: "围绕深夜思绪展开的流行专辑，收录 Lavender Haze、Anti-Hero 和 Midnight Rain。" },
+  { id: "the-tortured-poets-department-2024", title: "THE TORTURED POETS DEPARTMENT", originalTitle: "THE TORTURED POETS DEPARTMENT", releaseYear: 2024,
+    category: "studio", era: "the-tortured-poets-department", collectionId: 1736268193, officialUrl: 'https://music.apple.com/us/album/the-tortured-poets-department/1736268193', featured: false, color: null,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a8/45/fd/a845fd82-d5c1-bffe-806a-ed0700b1c589/24UMGIM29563.rgb.jpg/600x600bb.jpg",
+    description: "以诗歌写作为主题线索的录音室专辑，收录与 Post Malone 合作的 Fortnight。" },
+  { id: "the-life-of-a-showgirl-2025", title: "The Life of a Showgirl", originalTitle: "The Life of a Showgirl", releaseYear: 2025,
+    category: "studio", era: "the-life-of-a-showgirl", collectionId: 1838810949, officialUrl: 'https://music.apple.com/us/album/the-life-of-a-showgirl/1838810949', featured: true, color: 0xd78360,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/58/8f/a9/588fa9a2-7cc5-f02c-9ce6-c986e0dc1c15/25UM1IM19577.rgb.jpg/600x600bb.jpg",
+    description: "与 Max Martin、Shellback 合作的第十二张录音室专辑，收录 Opalite 和 The Fate of Ophelia。" },
+  { id: "fearless-tv-2021", title: "Fearless (Taylor's Version)", originalTitle: "Fearless", releaseYear: 2021,
+    category: "re-recorded", era: "fearless", collectionId: 1552791073, officialUrl: 'https://music.apple.com/us/album/fearless-taylors-version/1552791073', featured: false, color: null,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/c3/d0/1c/c3d01c88-73e7-187e-fd62-e1744de979a6/21UMGIM09915.rgb.jpg/600x600bb.jpg",
+    description: "Fearless 的正式重录版，包含原专辑重录曲目和 From The Vault 曲目。" },
+  { id: "red-tv-2021", title: "Red (Taylor's Version)", originalTitle: "Red", releaseYear: 2021,
+    category: "re-recorded", era: "red", collectionId: 1589139584, officialUrl: 'https://music.apple.com/us/album/red-taylors-version/1589139584', featured: false, color: null,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e1/b1/04/e1b10422-f39c-a8c7-195b-ebdb8c05489c/21UM1IM25046.rgb.jpg/600x600bb.jpg",
+    description: "Red 的正式重录版，收录 All Too Well 的十分钟版本和 From The Vault 曲目。" },
+  { id: "speak-now-tv-2023", title: "Speak Now (Taylor's Version)", originalTitle: "Speak Now", releaseYear: 2023,
+    category: "re-recorded", era: "speak-now", collectionId: 1690839749, officialUrl: 'https://music.apple.com/us/album/speak-now-taylors-version/1690839749', featured: false, color: null,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/9f/3c/0a/9f3c0a60-f9e0-a34e-60e5-0be1f182896b/23UMGIM63932.rgb.jpg/600x600bb.jpg",
+    description: "Speak Now 的正式重录版，包含 I Can See You 等 From The Vault 曲目。" },
+  { id: "1989-tv-2023", title: "1989 (Taylor's Version)", originalTitle: "1989", releaseYear: 2023,
+    category: "re-recorded", era: "1989", collectionId: 1708308989, officialUrl: 'https://music.apple.com/us/album/1989-taylors-version/1708308989', featured: false, color: null,
+    artworkUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/11/a6/80/11a680e6-2e48-08fa-5e87-3f18e838d31f/23UM1IM11868.rgb.jpg/600x600bb.jpg",
+    description: "1989 的正式重录版，包含 Is It Over Now? 等 From The Vault 曲目。" },
+].map(Object.freeze));
+const catalogById = new Map(albumCatalog.map(album => [album.id, album]));
+const collectionKey = 'vinyl-room.collection';
+const collectionVersion = 1;
+let savedAlbums = new Map();
+let collectionStorage = null;
+let collectionStorageNote = '';
+
+function decodeCollection(raw) {
+  if (!raw) return new Map();
+  let data;
+  try { data = JSON.parse(raw); }
+  catch { return new Map(); }
+  if (data && Object.hasOwn(data, 'version') && data.version !== collectionVersion) return null;
+  if (!data || data.version !== collectionVersion) return new Map();
+  const entries = Array.isArray(data.items) ? data.items : Array.isArray(data.albumIds)
+    ? data.albumIds.map((albumId, addedAt) => ({ albumId, addedAt })) : [];
+  const result = new Map();
+  for (const entry of entries) {
+    if (!catalogById.has(entry?.albumId)) continue;
+    const addedAt = Number.isSafeInteger(entry.addedAt) && entry.addedAt >= 0 ? entry.addedAt : 0;
+    result.set(entry.albumId, Math.max(addedAt, result.get(entry.albumId) ?? 0));
+  }
+  return result;
 }
 
+try {
+  collectionStorage = window.localStorage;
+  const stored = decodeCollection(collectionStorage.getItem(collectionKey));
+  if (stored) savedAlbums = stored;
+  else {
+    collectionStorage = null;
+    collectionStorageNote = '收藏数据来自较新版本。原记录已保留，此页面的收藏改动暂时保存。';
+  }
+} catch {
+  collectionStorage = null;
+  collectionStorageNote = '浏览器存储不可用，收藏只在当前页面暂时保留。';
+}
+
+function paintFavorite(button, album, showLabel = false) {
+  const saved = savedAlbums.has(album.id);
+  const label = saved ? '取消收藏' : '收藏';
+  button.setAttribute('aria-pressed', String(saved));
+  button.setAttribute('aria-label', label + ' ' + album.title);
+  button.title = label + ' ' + album.title;
+  button.textContent = saved ? '♥' : '♡';
+  if (showLabel) {
+    const text = document.createElement('span');
+    text.className = 'favorite-label';
+    text.textContent = saved ? '已收藏' : '收藏';
+    button.append(text);
+  }
+}
+
+function refreshFavorites() {
+  for (const [id, card] of [...exploreCards, ...collectionCards]) {
+    paintFavorite(card.favorite, catalogById.get(id));
+  }
+  if (detailAlbumId && catalogById.has(detailAlbumId)) {
+    paintFavorite($('detail-favorite'), catalogById.get(detailAlbumId), true);
+  }
+  if (pageView === 'collection') renderCollection();
+  const hint = $('storage-feedback');
+  hint.hidden = !collectionStorageNote || pageView === 'collection';
+  hint.textContent = collectionStorageNote;
+}
+
+function toggleFavorite(albumId) {
+  if (!catalogById.has(albumId)) return;
+  const remove = savedAlbums.has(albumId);
+  changeCollection(() => remove ? Number(savedAlbums.delete(albumId)) : addFavorites([albumId]));
+}
+
+function addFavorites(ids) {
+  let added = 0;
+  let time = Math.max(0, ...savedAlbums.values());
+  for (const albumId of ids) {
+    if (!catalogById.has(albumId) || savedAlbums.has(albumId)) continue;
+    time = Math.max(Date.now(), time < Number.MAX_SAFE_INTEGER ? time + 1 : time);
+    savedAlbums.set(albumId, time);
+    added++;
+  }
+  return added;
+}
+
+function changeCollection(change) {
+  if (collectionStorage) {
+    try {
+      const latest = decodeCollection(collectionStorage.getItem(collectionKey));
+      if (latest) savedAlbums = latest;
+      else {
+        collectionStorage = null;
+        collectionStorageNote = '收藏原记录来自较新版本，未被覆盖。当前更改只在本页暂存。';
+      }
+    } catch {
+      collectionStorage = null;
+      collectionStorageNote = '浏览器存储不可用，收藏只在当前页面暂时保留。';
+    }
+  }
+  const changed = change();
+  if (collectionStorage && changed) {
+    try {
+      const items = [...savedAlbums].map(([albumId, addedAt]) => ({ albumId, addedAt }));
+      collectionStorage.setItem(collectionKey, JSON.stringify({ version: collectionVersion, items }));
+    } catch {
+      collectionStorage = null;
+      collectionStorageNote = '浏览器无法保存收藏，当前更改只在本页暂存。';
+    }
+  }
+  refreshFavorites();
+  return changed;
+}
+
+window.addEventListener('storage', event => {
+  if (!collectionStorage || event.storageArea !== collectionStorage ||
+      (event.key !== collectionKey && event.key !== null)) return;
+  const stored = decodeCollection(event.newValue);
+  if (stored) savedAlbums = stored;
+  else {
+    collectionStorage = null;
+    collectionStorageNote = '收藏数据来自较新版本。原记录已保留，此页面的收藏改动暂时保存。';
+  }
+  refreshFavorites();
+});
+// Home order is curated independently from the full catalog.
+const featuredOrder = ["fearless-2008", "speak-now-2010", "red-2012", "1989-2014", "reputation-2017", "lover-2019", "folklore-2020", "evermore-2020", "midnights-2022", "the-life-of-a-showgirl-2025"];
+const playbackById = new Map(Array.from(catalogById,
+  ([id, album]) => [id, { ...album, index: -1, preview: null }]));
+const albums = featuredOrder.map((id, index) => Object.assign(playbackById.get(id), { index }));
+const homeById = new Map(albums.map(album => [album.id, album]));
+
+function appleUrl(value) {
+  try {
+    const url = new URL(value);
+    if (url.protocol === 'https:' && /(^|\.)(apple\.com|mzstatic\.com|apple\.co)$/i.test(url.hostname)) return url.href;
+  } catch {}
+  return '';
+}
+
+async function getResults(endpoint, params, signal) {
+  const url = new URL(endpoint, 'https://itunes.apple.com');
+  url.search = new URLSearchParams({ ...params, media: 'music', entity: 'song', country: 'US' });
+  const timeout = new AbortController();
+  const cancel = () => timeout.abort(signal.reason);
+  if (signal.aborted) cancel();
+  else signal.addEventListener('abort', cancel, { once: true });
+  const timer = setTimeout(() => timeout.abort(new DOMException('iTunes timeout', 'TimeoutError')), 9000);
+  try {
+    const response = await fetch(url, { signal: timeout.signal });
+    if (!response.ok) throw new Error('iTunes HTTP ' + response.status);
+    const data = await response.json();
+    return Array.isArray(data.results) ? data.results : [];
+  } finally {
+    clearTimeout(timer);
+    signal.removeEventListener('abort', cancel);
+  }
+}
+
+async function fetchPreview(album, signal) {
+  const playable = song => song.kind === 'song' && song.artistName === 'Taylor Swift' &&
+    song.trackName && appleUrl(song.previewUrl);
+  const ids = [album.collectionId, ...(album.appleCollectionAliases ?? [])].filter(Boolean);
+  const findEdition = rows => {
+    for (const id of ids) {
+      const song = rows.find(row => Number(row.collectionId) === id && playable(row));
+      if (song) return song;
+    }
+  };
+  const results = await getResults('/search', {
+    term: 'Taylor Swift ' + album.title, attribute: 'albumTerm', limit: '25',
+  }, signal);
+  // Only verified IDs may resolve to this edition, even when search favors a different release.
+  const song = findEdition(results) ?? (ids.length
+    ? findEdition(await getResults('/lookup', { id: ids.join(','), limit: '30' }, signal))
+    : null);
+  if (!song) throw new Error('该发行版本暂无官方试听');
+  const originalArtwork = appleUrl(song.artworkUrl100);
+  return {
+    trackId: song.trackId == null ? null : String(song.trackId),
+    previewUrl: appleUrl(song.previewUrl),
+    trackName: song.trackName,
+    artworkUrl: originalArtwork.replace(/\/\d+x\d+([^/]*)$/i, '/600x600$1'),
+    originalArtwork,
+    storeUrl: appleUrl(song.trackViewUrl) || appleUrl(song.collectionViewUrl),
+  };
+}
+
+function coverSources(album) {
+  return album.artworkUrl
+    ? [album.artworkUrl, album.artworkUrl.replace('/600x600bb.jpg', '/100x100bb.jpg')]
+    : [];
+}
+
+function createQueue(limit) {
+  const jobs = new Map();
+  let active = 0;
+  function pump() {
+    if (document.hidden) return;
+    while (active < limit) {
+      const job = [...jobs.values()].filter(item => !item.running)
+        .sort((a, b) => b.priority - a.priority)[0];
+      if (!job) break;
+      job.running = true;
+      active++;
+      Promise.resolve().then(() => job.run(job.controller.signal))
+        .then(job.resolve, job.reject).finally(() => {
+          jobs.delete(job.id);
+          active--;
+          pump();
+        });
+    }
+  }
+  return {
+    add(id, priority, run) {
+      const existing = jobs.get(id);
+      if (existing) {
+        existing.priority = Math.max(existing.priority, priority);
+        return existing.promise;
+      }
+      const job = { id, priority, run, controller: new AbortController() };
+      job.promise = new Promise((resolve, reject) => Object.assign(job, { resolve, reject }));
+      jobs.set(id, job);
+      pump();
+      return job.promise;
+    },
+    prune(keep, includeRunning = false) {
+      for (const job of jobs.values()) {
+        if (keep.has(job.id)) continue;
+        if (job.running) {
+          if (includeRunning) job.controller.abort();
+        } else {
+          jobs.delete(job.id);
+          job.reject(new DOMException('No longer needed', 'AbortError'));
+        }
+      }
+    },
+    pump,
+  };
+}
+
+const coverQueue = createQueue(2);
+const previewQueue = createQueue(2);
+const coverCache = new Map();
+const coverFailures = new Map();
+const previewFailures = new Map();
+const stageHost = $('stage');
+const coverRetry = document.createElement('button');
+coverRetry.type = 'button';
+coverRetry.className = 'cover-retry';
+coverRetry.textContent = '封面加载失败 · 重试';
+coverRetry.hidden = true;
+stageHost.after(coverRetry);
+let view = {};
+let visibleIndex = 0;
+let nearbyTimer;
+let pageView = 'home';
+
+function loadImage(url, signal) {
+  return new Promise((resolve, reject) => {
+    if (signal.aborted) return reject(signal.reason);
+    const image = new Image();
+    image.crossOrigin = 'anonymous';
+    const timer = setTimeout(() => finish(new Error('Image timeout')), 8000);
+    function finish(error) {
+      clearTimeout(timer);
+      image.onload = image.onerror = null;
+      signal.removeEventListener('abort', cancel);
+      if (error) {
+        image.removeAttribute('src');
+        reject(error);
+      } else resolve(image);
+    }
+    const cancel = () => finish(signal.reason);
+    signal.addEventListener('abort', cancel, { once: true });
+    image.onload = () => finish();
+    image.onerror = () => finish(new Error('Image unavailable'));
+    image.src = url;
+  });
+}
+
+function syncCoverHint() {
+  const album = albums[visibleIndex];
+  coverRetry.hidden = !coverFailures.has(album.id) || coverCache.has(album.id);
+}
+
+function paintPlayerCover(album) {
+  if (selectedId !== album.id) return;
+  const image = coverCache.get(album.id);
+  const art = $('art');
+  art.hidden = !image;
+  if (image) art.src = image.src;
+}
+
+function loadCover(album, priority, retry = false) {
+  if (coverCache.has(album.id)) return Promise.resolve();
+  if (!retry && Date.now() - (coverFailures.get(album.id) ?? 0) < 20000) return Promise.resolve();
+  return coverQueue.add(album.id, priority, async signal => {
+    const preview = album.preview ?? (!album.artworkUrl ? await loadPreview(album, 1).catch(() => null) : null);
+    const sources = [...coverSources(album), preview?.artworkUrl, preview?.originalArtwork].filter(Boolean);
+    for (const url of new Set(sources)) {
+      try {
+        const image = await loadImage(url, signal);
+        coverCache.set(album.id, image);
+        coverFailures.delete(album.id);
+        view.cover?.(album, image);
+        paintExploreCover(album, image);
+        paintDetailCover(album, image);
+        paintPlayerCover(album);
+        syncCoverHint();
+        return;
+      } catch (error) {
+        if (signal.aborted) throw error;
+      }
+    }
+    coverFailures.set(album.id, Date.now());
+    syncCoverHint();
+  }).catch(() => {});
+}
+
+function loadPreview(album, priority = 3) {
+  if (album.preview) return Promise.resolve(album.preview);
+  if (priority === 1 && Date.now() - (previewFailures.get(album.id) ?? 0) < 20000) {
+    return Promise.resolve(null);
+  }
+  return previewQueue.add(album.id, priority, async signal => {
+    try {
+      album.preview = await fetchPreview(album, signal);
+      previewFailures.delete(album.id);
+      return album.preview;
+    } catch (error) {
+      if (!signal.aborted) previewFailures.set(album.id, Date.now());
+      throw error;
+    }
+  });
+}
+
+function setBrowseIndex(index) {
+  visibleIndex = (index + albums.length) % albums.length;
+  $('counter').textContent = String(visibleIndex + 1).padStart(2, '0') + ' / ' + albums.length;
+  view.browsed?.(visibleIndex);
+  syncCoverHint();
+  clearTimeout(nearbyTimer);
+  nearbyTimer = setTimeout(() => {
+    if (document.hidden || pageView !== 'home') return;
+    const center = albums[visibleIndex];
+    const next = albums[(visibleIndex + 1) % albums.length];
+    const previous = albums[(visibleIndex + albums.length - 1) % albums.length];
+    const chosen = playbackById.get(selectedId);
+    coverQueue.prune(new Set([center.id, next.id, previous.id, chosen?.id]));
+    previewQueue.prune(new Set([center.id, chosen?.id]));
+    void loadCover(center, 2);
+    void loadCover(next, 1);
+    void loadCover(previous, 1);
+    if (playerState !== 'failed' || selectedId !== center.id) loadPreview(center, 1).catch(() => {});
+  }, 180);
+}
+coverRetry.addEventListener('click', () => {
+  const album = albums[visibleIndex];
+  coverFailures.delete(album.id);
+  syncCoverHint();
+  void loadCover(album, 3, true);
+});
+$('prev').addEventListener('click', () => view.browse?.(-1));
+$('next').addEventListener('click', () => view.browse?.(1));
+window.addEventListener('pagehide', () => {
+  clearTimeout(nearbyTimer);
+  coverQueue.prune(new Set(), true);
+  previewQueue.prune(new Set(), true);
+});
+
+const maxPreviewSeconds = 30;
+let audio = null;
+let selectedId = null;
+let selectedShelf = 'Explore';
+let selectedTrackId = null;
+let selectedTrack = null;
+let trackNeedsRefresh = false;
+let request = 0;
+let playerState = 'idle';
+let spinning = false;
+let selectionOnly = false;
+let limitTimer;
+const playerMessages = {
+  fetching: '正在获取官方试听…',
+  ready: '已选中 · 点击播放',
+  loading: '正在加载试听…',
+  playing: '正在播放 · iTunes 官方试听',
+  paused: '已暂停 · iTunes 官方试听',
+  ended: '试听结束',
+  failed: '试听加载失败，点击重试',
+};
+
+function setPlayerState(state, message = playerMessages[state]) {
+  playerState = state;
+  spinning = state === 'playing';
+  if (!spinning) clearTimeout(limitTimer);
+  const canPause = state === 'loading' || state === 'playing' || (state === 'fetching' && !selectionOnly);
+  $('play').disabled = state === 'idle';
+  $('play').textContent = canPause ? 'Ⅱ' : '▶';
+  $('play').setAttribute('aria-label', canPause ? '暂停' : state === 'ended' ? '重新播放' : state === 'failed' ? '重试' : '播放');
+  const album = playbackById.get(selectedId);
+  $('state').textContent = album ? message + ' · ' + album.title : message;
+  view.select?.(selectedId);
+  syncExploreSelection();
+  syncDetailPlayback();
+  view.draw?.();
+}
+
+function discardAudio() {
+  const previous = audio;
+  audio = null;
+  if (!previous) return;
+  previous.pause();
+  previous.removeAttribute('src');
+  previous.load();
+}
+
+function finishPreview() {
+  if (!audio || !['playing', 'loading'].includes(playerState)) return;
+  setPlayerState('ended');
+  audio.pause();
+  $('progress').style.width = '100%';
+}
+
+function updateProgress() {
+  if (!audio || !['playing', 'loading', 'paused'].includes(playerState)) return;
+  const duration = Math.min(audio.duration, maxPreviewSeconds);
+  if (Number.isFinite(duration) && duration > 0) {
+    $('progress').style.width = Math.min(100, audio.currentTime / duration * 100) + '%';
+  }
+  if (audio.currentTime >= maxPreviewSeconds) finishPreview();
+}
+
+function schedulePreviewLimit() {
+  clearTimeout(limitTimer);
+  if (!audio || playerState !== 'playing' || audio.paused) return;
+  const remaining = maxPreviewSeconds - audio.currentTime;
+  if (remaining <= 0) {
+    finishPreview();
+  } else {
+    limitTimer = setTimeout(schedulePreviewLimit, Math.max(40, remaining * 1000 / audio.playbackRate));
+  }
+}
+
+function failPlayback(message, refreshPreview = false) {
+  request++;
+  setPlayerState('failed', message);
+  if (refreshPreview) {
+    if (selectedTrack) trackNeedsRefresh = true;
+    else playbackById.get(selectedId).preview = null;
+    discardAudio();
+  } else {
+    audio?.pause();
+  }
+}
+
+function prepareAudio(preview) {
+  discardAudio();
+  const media = new Audio();
+  audio = media;
+  media.preload = 'none';
+  media.volume = .64;
+  function on(event, callback) {
+    media.addEventListener(event, () => {
+      if (audio === media) callback();
+    });
+  }
+  on('playing', () => {
+    if (!media.paused && ['loading', 'playing'].includes(playerState)) {
+      setPlayerState('playing');
+      schedulePreviewLimit();
+    }
+  });
+  on('waiting', () => {
+    if (!media.paused && ['playing', 'loading'].includes(playerState)) setPlayerState('loading', '正在缓冲试听…');
+  });
+  on('pause', () => {
+    if (media.ended) finishPreview();
+    else if (media.paused && ['playing', 'loading'].includes(playerState)) {
+      setPlayerState('paused');
+    }
+  });
+  on('ended', finishPreview);
+  on('timeupdate', updateProgress);
+  on('ratechange', schedulePreviewLimit);
+  on('error', () => failPlayback('音频加载失败，点击重试', true));
+  media.src = preview.previewUrl;
+}
+
+function officialAlbumUrl(album) {
+  return album.officialUrl ?? '';
+}
+
+async function playAlbum(album, shouldPlay = true, track = null) {
+  const sameAlbum = selectedId === album.id;
+  const sameSelection = sameAlbum && (track ? selectedTrackId === track.trackId : !selectedTrack);
+  if (sameSelection && (playerState === 'playing' || playerState === 'loading' ||
+      (playerState === 'fetching' && (!selectionOnly || !shouldPlay)))) return;
+  const restart = sameSelection && playerState === 'ended';
+  const id = ++request;
+  selectionOnly = !shouldPlay;
+  if (!sameSelection) {
+    discardAudio();
+    selectedShelf = pageView === 'collection' || (pageView === 'album' && history.state?.albumBack === 'collection')
+      ? 'My Collection' : 'Explore';
+    trackNeedsRefresh = false;
+    $('progress').style.width = '0%';
+    $('art').hidden = true;
+    const store = officialAlbumUrl(album);
+    $('store').hidden = !store;
+    if (store) $('store').href = store;
+  }
+  selectedId = album.id;
+  if (!sameSelection) selectedTrackId = track?.trackId ?? null;
+  selectedTrack = track;
+  syncHomeSelection();
+  paintPlayerCover(album);
+  void loadCover(album, 3);
+  previewQueue.prune(new Set([album.id, ...(pageView === 'home' ? [albums[visibleIndex].id] : [])]));
+  $('track').textContent = track?.trackName ?? album.preview?.trackName ?? album.title;
+  if ((track && trackNeedsRefresh) || (!track && !album.preview)) {
+    setPlayerState('fetching');
+  }
+  try {
+    const refreshingTrack = track && trackNeedsRefresh;
+    const preview = refreshingTrack
+      ? (await loadTracklist(album, true)).tracks.find(item => item.trackId === track.trackId)
+      : track ?? album.preview ?? await loadPreview(album);
+    if (id !== request) return;
+    if (!preview?.previewUrl) throw new Error('该曲目暂无官方试听');
+    if (refreshingTrack) {
+      selectedTrack = preview;
+      trackNeedsRefresh = false;
+    }
+    selectedTrackId = preview.trackId ?? null;
+    $('track').textContent = preview.trackName;
+    paintPlayerCover(album);
+    if (!coverCache.has(album.id) && (preview.artworkUrl || preview.originalArtwork)) {
+      void loadCover(album, 3, true);
+    }
+    if (preview.storeUrl) $('store').href = preview.storeUrl;
+    if (!shouldPlay) {
+      setPlayerState(restart ? 'ended' : 'ready');
+      return;
+    }
+    setPlayerState('loading');
+    if (audio?.src !== preview.previewUrl) prepareAudio(preview);
+    if (restart || audio.ended || audio.currentTime >= maxPreviewSeconds) {
+      audio.currentTime = 0;
+      $('progress').style.width = '0%';
+    }
+    await audio.play();
+  } catch (error) {
+    if (id !== request) return;
+    if (error.name === 'NotAllowedError') {
+      failPlayback('浏览器阻止了播放，点击重试');
+    } else if (error.name === 'TimeoutError') {
+      failPlayback('获取试听超时，点击重试');
+    } else if (error.message === '该发行版本暂无官方试听' || error.message === '该曲目暂无官方试听') {
+      failPlayback(error.message + '，点击重试');
+    } else {
+      failPlayback('试听加载失败，点击重试', Boolean(audio));
+    }
+  }
+}
+$('play').addEventListener('click', () => {
+  if (['loading', 'playing'].includes(playerState) || (playerState === 'fetching' && !selectionOnly)) {
+    request++;
+    setPlayerState('paused');
+    audio?.pause();
+  }
+  else if (selectedId !== null) playAlbum(playbackById.get(selectedId), true, selectedTrack);
+});
+
+const exploreGrid = $('album-grid');
+const exploreCards = new Map();
+const nearbyExploreIds = new Set();
+const collectionCards = new Map();
+const nearbyCollectionIds = new Set();
+const sharedCards = new Map();
+const nearbySharedIds = new Set();
+let collectionCategory = 'all';
+let activeCategory = 'all';
+const titleOrder = new Intl.Collator('en', { sensitivity: 'base', numeric: true });
+function searchKey(value) {
+  return value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    .replace(/['’‘]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+}
+const searchIndex = new Map(albumCatalog.map(album => [album.id,
+  searchKey(album.title + ' ' + album.originalTitle)]));
+
+function paintExploreCover(album, image) {
+  for (const cards of [exploreCards, collectionCards, sharedCards]) {
+    const card = cards.get(album.id);
+    if (!card || card.cover.querySelector('img')) continue;
+    const img = image.cloneNode();
+    img.alt = album.title + ' album cover';
+    img.decoding = 'async';
+    img.loading = 'lazy';
+    img.addEventListener('error', () => img.remove(), { once: true });
+    card.cover.append(img);
+  }
+}
+
+function syncExploreSelection() {
+  for (const [id, card] of exploreCards) {
+    card.root.dataset.selected = String(id === selectedId);
+    card.button.setAttribute('aria-pressed', String(id === selectedId));
+  }
+  for (const [id, card] of collectionCards) {
+    card.root.dataset.selected = String(id === selectedId);
+    for (const [trackId, button] of card.trackButtons) {
+      button.setAttribute('aria-pressed', String(id === selectedId && trackId === selectedTrackId));
+    }
+  }
+}
+
+function syncHomeSelection() {
+  const album = playbackById.get(selectedId);
+  const label = $('home-selection');
+  label.hidden = !album || homeById.has(album.id);
+  label.textContent = label.hidden ? '' : '播放器已选中《' + album.title + '》 · 来自 ' + selectedShelf;
+}
+
+function queueExploreCover(album) {
+  void loadCover(playbackById.get(album.id), 2);
+}
+
+function observeShelf(page, nearbyIds) {
+  if (typeof IntersectionObserver !== 'function') return null;
+  return new IntersectionObserver(entries => {
+    if (pageView !== page) return;
+    for (const entry of entries) {
+      if (!entry.isIntersecting) nearbyIds.delete(entry.target.dataset.albumId);
+      else nearbyIds.add(entry.target.dataset.albumId);
+    }
+    coverQueue.prune(new Set([...nearbyIds, selectedId]));
+    for (const entry of entries) {
+      if (entry.isIntersecting) queueExploreCover(catalogById.get(entry.target.dataset.albumId));
+    }
+  }, { root: $(page), rootMargin: '64px 0px' });
+}
+const exploreObserver = observeShelf('explore', nearbyExploreIds);
+const collectionObserver = observeShelf('collection', nearbyCollectionIds);
+const sharedObserver = observeShelf('share', nearbySharedIds);
+
+function makeAlbumCard(album, shelf = 'explore') {
+  const root = document.createElement('article');
+  root.className = 'album-card';
+  root.dataset.albumId = album.id;
+  const link = document.createElement('a');
+  link.href = '#album/' + encodeURIComponent(album.id);
+  link.className = 'album-pick';
+  link.setAttribute('aria-label', 'View album ' + album.title);
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'album-info';
+  button.textContent = 'Select for preview';
+  button.setAttribute('aria-label', 'Select ' + album.title);
+  const cover = document.createElement('span');
+  cover.className = 'album-cover';
+  cover.textContent = 'TS';
+  if (album.color !== null) cover.style.setProperty('--cover', '#' + album.color.toString(16).padStart(6, '0'));
+  const name = document.createElement('strong');
+  name.className = 'album-title';
+  name.textContent = album.title;
+  const meta = document.createElement('span');
+  meta.className = 'album-meta';
+  meta.textContent = album.releaseYear + ' · ' + (album.category === 'studio' ? 'Studio Album' : "Taylor's Version");
+  link.append(cover, name, meta);
+  button.addEventListener('click', () => playAlbum(playbackById.get(album.id), false));
+  const favorite = document.createElement('button');
+  favorite.type = 'button';
+  favorite.className = 'favorite';
+  paintFavorite(favorite, album);
+  favorite.addEventListener('click', () => toggleFavorite(album.id));
+  const card = { root, button, cover, favorite, trackButtons: new Map() };
+  if (shelf === 'share') {
+    sharedCards.set(album.id, card);
+    root.append(link);
+  } else if (shelf === 'collection') {
+    collectionCards.set(album.id, card);
+    root.append(link, favorite, makeCollectionTracks(album, card));
+  } else {
+    exploreCards.set(album.id, card);
+    root.append(link, favorite, button);
+  }
+  link.addEventListener('focus', () => queueExploreCover(album));
+  const image = coverCache.get(album.id);
+  if (image) paintExploreCover(album, image);
+  return root;
+}
+
+function renderExplore() {
+  const query = searchKey($('album-search').value);
+  const tokens = query.split(' ').filter(Boolean);
+  const sort = $('album-sort').value;
+  const results = albumCatalog.filter(album =>
+    (activeCategory === 'all' || album.category === activeCategory) &&
+    tokens.every(token => searchIndex.get(album.id).includes(token)));
+  if (sort === 'newest') results.sort((a, b) => b.releaseYear - a.releaseYear);
+  if (sort === 'oldest') results.sort((a, b) => a.releaseYear - b.releaseYear);
+  if (sort === 'az') results.sort((a, b) => titleOrder.compare(a.title, b.title));
+  exploreObserver?.disconnect();
+  nearbyExploreIds.clear();
+  coverQueue.prune(new Set([selectedId, ...results.map(album => album.id)]));
+  exploreCards.clear();
+  exploreGrid.replaceChildren(...results.map(album => makeAlbumCard(album)));
+  const count = 'Showing ' + results.length + (results.length === 1 ? ' album' : ' albums');
+  $('album-count').textContent = count;
+  $('album-count-end').textContent = count;
+  $('album-empty').hidden = results.length !== 0;
+  $('clear-search').hidden = !$('album-search').value;
+  syncExploreSelection();
+  if (exploreObserver) for (const card of exploreCards.values()) exploreObserver.observe(card.root);
+  else for (const album of results.slice(0, 4)) queueExploreCover(album);
+}
+
+$('album-search').addEventListener('input', renderExplore);
+$('clear-search').addEventListener('click', () => {
+  $('album-search').value = '';
+  renderExplore();
+  $('album-search').focus();
+});
+$('album-sort').addEventListener('change', renderExplore);
+for (const button of document.querySelectorAll('[data-category]')) {
+  button.addEventListener('click', () => {
+    activeCategory = button.dataset.category;
+    for (const option of document.querySelectorAll('[data-category]')) {
+      option.setAttribute('aria-pressed', String(option === button));
+    }
+    renderExplore();
+  });
+}
+
+function makeCollectionTracks(album, card) {
+  const details = document.createElement('details');
+  details.className = 'collection-tracks';
+  const summary = document.createElement('summary');
+  summary.textContent = 'Choose a track';
+  summary.setAttribute('aria-label', 'Choose a track from ' + album.title);
+  const list = document.createElement('div');
+  list.className = 'collection-track-list';
+  details.append(summary, list);
+  let loading = false;
+  let loaded = false;
+  async function populate() {
+    if (loading || loaded) return;
+    loading = true;
+    list.textContent = '正在加载曲目…';
+    try {
+      const { tracks } = await loadTracklist(album);
+      if (!details.isConnected) return;
+      loaded = true;
+      list.replaceChildren();
+      const playable = tracks.filter(track => track.previewUrl);
+      if (!playable.length) list.textContent = '这张专辑目前没有可试听的曲目。';
+      for (const track of playable) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = track.trackName;
+        button.setAttribute('aria-label', '选择试听 ' + track.trackName);
+        button.addEventListener('click', () => playAlbum(playbackById.get(album.id), false, track));
+        card.trackButtons.set(track.trackId, button);
+        list.append(button);
+      }
+      syncExploreSelection();
+    } catch {
+      if (!details.isConnected) return;
+      list.textContent = '曲目加载失败。';
+      const retry = document.createElement('button');
+      retry.type = 'button';
+      retry.textContent = '重新加载曲目';
+      retry.addEventListener('click', populate);
+      list.append(retry);
+    } finally {
+      loading = false;
+    }
+  }
+  details.addEventListener('toggle', () => { if (details.open) void populate(); });
+  return details;
+}
+
+function renderCollection() {
+  const saved = albumCatalog.filter(album => savedAlbums.has(album.id));
+  const studio = saved.reduce((count, album) => count + (album.category === 'studio' ? 1 : 0), 0);
+  $('collection-total').textContent = saved.length;
+  $('collection-studio').textContent = studio;
+  $('collection-tv').textContent = saved.length - studio;
+  const note = $('collection-storage-note');
+  note.hidden = !collectionStorageNote;
+  note.textContent = collectionStorageNote;
+  $('collection-tools').hidden = !saved.length;
+  $('collection-empty').hidden = Boolean(saved.length);
+  $('open-share').disabled = !saved.length;
+  $('share-empty-note').hidden = Boolean(saved.length);
+  const search = $('collection-search');
+  const tokens = searchKey(search.value).split(' ').filter(Boolean);
+  const results = saved.filter(album =>
+    (collectionCategory === 'all' || collectionCategory === album.category) &&
+    tokens.every(token => searchIndex.get(album.id).includes(token)));
+  const sort = $('collection-sort').value;
+  if (sort === 'newest') results.sort((a, b) => b.releaseYear - a.releaseYear);
+  else if (sort === 'oldest') results.sort((a, b) => a.releaseYear - b.releaseYear);
+  else if (sort === 'az') results.sort((a, b) => titleOrder.compare(a.title, b.title));
+  else results.sort((a, b) => savedAlbums.get(b.id) - savedAlbums.get(a.id));
+  $('collection-clear').hidden = !search.value;
+  $('collection-count').textContent = 'Showing ' + results.length + (results.length === 1 ? ' album' : ' albums');
+  $('collection-no-results').hidden = !saved.length || Boolean(results.length);
+
+  const oldFocus = document.activeElement;
+  const grid = $('collection-grid');
+  const restoreFocus = grid.contains(oldFocus);
+  collectionObserver?.disconnect();
+  nearbyCollectionIds.clear();
+  const wanted = new Set(results.map(album => album.id));
+  coverQueue.prune(new Set([...wanted, selectedId]));
+  for (const id of collectionCards.keys()) if (!wanted.has(id)) collectionCards.delete(id);
+  const cards = results.map(album => collectionCards.get(album.id)?.root ?? makeAlbumCard(album, 'collection'));
+  grid.replaceChildren(...cards);
+  if (restoreFocus) {
+    const fallback = cards[0]?.querySelector('.favorite') ??
+      document.querySelector(saved.length ? '[data-collection-category][aria-pressed="true"]' : '#collection-empty a');
+    (oldFocus.isConnected ? oldFocus : fallback)?.focus({ preventScroll: true });
+  }
+  syncExploreSelection();
+  if (collectionObserver) for (const card of cards) collectionObserver.observe(card);
+  else for (const album of results.slice(0, 4)) queueExploreCover(album);
+}
+
+$('collection-search').addEventListener('input', renderCollection);
+$('collection-sort').addEventListener('change', renderCollection);
+$('collection-clear').addEventListener('click', () => {
+  $('collection-search').value = '';
+  renderCollection();
+  $('collection-search').focus();
+});
+for (const button of document.querySelectorAll('[data-collection-category]')) {
+  button.addEventListener('click', () => {
+    collectionCategory = button.dataset.collectionCategory;
+    for (const option of document.querySelectorAll('[data-collection-category]')) {
+      option.setAttribute('aria-pressed', String(option === button));
+    }
+    renderCollection();
+  });
+}
+
+const defaultShareCaption = 'My Music Universe.\nCollected with love, played with memories.';
+const shareLimit = 16;
+const shareLengthLimit = 1900;
+const posterSizes = {
+  '1080x1350': [1080, 1350], '1080x1080': [1080, 1080], '1200x630': [1200, 630],
+};
+const publicSite = 'https://xutong-bt.github.io/taylor-vinyl-room/';
+const shareDialog = $('share-dialog');
+let shareDraft = [];
+let sharedSnapshot = null;
+let posterBlob = null;
+let preparedFile = null;
+let posterRevision = 0;
+
+function cleanCaption(value) {
+  const text = typeof value === 'string' ? value.replace(/[\u0000-\u0008\u000b-\u001f\u007f]/g, ' ').trim() : '';
+  return Array.from(text).slice(0, 100).join('') || defaultShareCaption;
+}
+
+function makeShareUrl(snapshot) {
+  const bytes = new TextEncoder().encode(JSON.stringify(snapshot));
+  const payload = btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const url = new URL(location.href);
+  url.search = '';
+  url.hash = 'share/' + payload;
+  return url.href.length <= shareLengthLimit ? url.href : '';
+}
+
+function decodeShare(payload) {
+  if (!payload || payload.length > shareLengthLimit || location.href.length > shareLengthLimit ||
+      !/^[A-Za-z0-9_-]+$/.test(payload)) return null;
+  try {
+    const binary = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+    const bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
+    const data = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+    if (data?.version !== 1 || !Array.isArray(data.albumIds)) return null;
+    const albumIds = [...new Set(data.albumIds.filter(id => typeof id === 'string' && catalogById.has(id)))]
+      .slice(0, shareLimit);
+    return albumIds.length ? { albumIds, caption: cleanCaption(data.caption) } : null;
+  } catch { return null; }
+}
+
+function renderShared(payload, focusHeading) {
+  sharedSnapshot = decodeShare(payload);
+  const albumsToShow = sharedSnapshot?.albumIds.map(id => catalogById.get(id)) ?? [];
+  const grid = $('shared-grid');
+  sharedObserver?.disconnect();
+  nearbySharedIds.clear();
+  sharedCards.clear();
+  coverQueue.prune(new Set([selectedId, ...albumsToShow.map(album => album.id)]));
+  $('shared-caption').textContent = sharedSnapshot?.caption ?? '';
+  $('share-result').textContent = sharedSnapshot
+    ? 'Shared albums · ' + albumsToShow.length
+    : '此链接无效、过长，或没有可显示的专辑。你可以前往 Explore 浏览目录。';
+  $('import-share').hidden = !sharedSnapshot;
+  grid.replaceChildren(...albumsToShow.map(album => makeAlbumCard(album, 'share')));
+  if (sharedObserver) for (const card of sharedCards.values()) sharedObserver.observe(card.root);
+  else for (const album of albumsToShow.slice(0, 4)) queueExploreCover(album);
+  if (focusHeading) $('shared-title').focus({ preventScroll: true });
+}
+
+$('import-share').addEventListener('click', () => {
+  if (!sharedSnapshot) return;
+  const added = changeCollection(() => addFavorites([...sharedSnapshot.albumIds].reverse()));
+  $('share-result').textContent = added
+    ? '已加入 ' + added + ' 张专辑，原有收藏和加入时间已保留。' + (collectionStorageNote ? ' ' + collectionStorageNote : '')
+    : '这些专辑已在 My Collection 中。';
+});
+
+function wrapPosterText(ctx, text, width) {
+  const lines = [];
+  for (const paragraph of text.split('\n')) {
+    let line = '';
+    for (const part of paragraph.match(/\S+\s*|\s+/gu) ?? []) {
+      if (line && ctx.measureText(line + part.trimEnd()).width > width) {
+        lines.push(line.trimEnd());
+        line = '';
+      }
+      for (const char of part) {
+        if (line && ctx.measureText(line + char).width > width) {
+          lines.push(line.trimEnd());
+          line = '';
+        }
+        line += char;
+      }
+    }
+    lines.push(line.trimEnd());
+  }
+  return lines;
+}
+
+function drawPoster(canvas, snapshot, [width, height], site) {
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const wide = width > height;
+  const edge = wide ? 55 : 62;
+  const gradient = ctx.createLinearGradient(0, 0, width, height);
+  gradient.addColorStop(0, '#37243f');
+  gradient.addColorStop(.56, '#21172c');
+  gradient.addColorStop(1, '#150f20');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, width, height);
+  ctx.strokeStyle = '#d9a8bd6e';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(25, 25, width - 50, height - 50);
+  ctx.strokeStyle = '#edb5cc13';
+  for (let i = 0; i < 19; i++) {
+    ctx.beginPath();
+    ctx.arc(width - 52, wide ? 80 : 110, 42 + i * 10, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.fillStyle = '#f3c3aa';
+  ctx.font = (wide ? '16' : '19') + 'px Arial, sans-serif';
+  ctx.fillText('TAYLOR SWIFT VINYL ROOM', edge, wide ? 53 : 66);
+  ctx.fillStyle = '#fff0fb';
+  ctx.font = (wide ? '57' : '70') + 'px Georgia, serif';
+  ctx.fillText('Your Music Universe.', edge, wide ? 111 : 145);
+  const caption = snapshot.caption.replace(/\n+/g, '\n');
+  let captionSize = wide ? 19 : 25;
+  let lines;
+  do {
+    ctx.font = captionSize + 'px "Microsoft YaHei", Arial, sans-serif';
+    lines = wrapPosterText(ctx, caption.replace(/\n(?=[\s\S]*\n)/g, ' '), width - edge * 2);
+    if (lines.length <= 3) break;
+    captionSize--;
+  } while (captionSize > 12);
+  ctx.fillStyle = '#edd1e4';
+  lines.forEach((line, index) => ctx.fillText(line, edge, (wide ? 141 : 185) + index * (captionSize + 4)));
+
+  const columns = wide ? 4 : 2;
+  const top = wide ? 207 : 277;
+  const bottom = height - (wide ? 66 : 82);
+  const rows = Math.ceil(snapshot.albumIds.length / columns);
+  const gap = wide ? 12 : 15;
+  const tileWidth = (width - edge * 2 - gap * (columns - 1)) / columns;
+  const tileHeight = Math.min(wide ? 91 : 151, (bottom - top - (rows - 1) * gap) / rows);
+  snapshot.albumIds.forEach((id, index) => {
+    const album = catalogById.get(id);
+    const x = edge + index % columns * (tileWidth + gap);
+    const y = top + Math.floor(index / columns) * (tileHeight + gap);
+    ctx.fillStyle = '#f5cce813';
+    ctx.fillRect(x, y, tileWidth, tileHeight);
+    ctx.strokeStyle = '#e7b0ce51';
+    ctx.strokeRect(x + .5, y + .5, tileWidth - 1, tileHeight - 1);
+    ctx.fillStyle = album.category === 're-recorded' ? '#efb7cf' : '#edbf98';
+    ctx.fillRect(x, y, 3, tileHeight);
+    ctx.fillStyle = '#fff0fb';
+    let fontSize = Math.min(wide ? 20 : 27, Math.floor((tileHeight - (wide ? 38 : 42)) / 2));
+    let titleLines;
+    do {
+      ctx.font = fontSize + 'px Georgia, serif';
+      titleLines = wrapPosterText(ctx, album.title, tileWidth - 26);
+      if (titleLines.length <= 2) break;
+      fontSize--;
+    } while (fontSize > 12);
+    titleLines.forEach((line, i) => ctx.fillText(line, x + 13, y + fontSize + 8 + i * (fontSize + 2)));
+    ctx.fillStyle = '#f2c9db';
+    ctx.font = (wide ? '13' : '17') + 'px Arial, sans-serif';
+    ctx.fillText(album.releaseYear + ' · ' + (album.category === 'studio' ? 'Studio Album' : "Taylor's Version"),
+      x + 13, y + tileHeight - 10);
+  });
+  ctx.strokeStyle = '#edb5cc51';
+  ctx.beginPath();
+  ctx.moveTo(edge, height - 54);
+  ctx.lineTo(width - edge, height - 54);
+  ctx.stroke();
+  ctx.font = (wide ? '14' : '17') + 'px Arial, sans-serif';
+  ctx.fillStyle = '#f3c3aa';
+  ctx.fillText(String(snapshot.albumIds.length).padStart(2, '0') + '  /  ALBUMS', edge, height - 34);
+  ctx.textAlign = 'right';
+  ctx.fillText(site, width - edge, height - 34, width - edge * 2 - 160);
+}
+
+function updateShareDraft() {
+  const revision = ++posterRevision;
+  const draft = { version: 1, albumIds: shareDraft, caption: cleanCaption($('share-caption').value) };
+  const url = makeShareUrl(draft);
+  $('share-url').value = url;
+  $('copy-share').disabled = !url;
+  $('native-share').hidden = typeof navigator.share !== 'function';
+  $('native-share').disabled = !url;
+  $('share-action-status').textContent = url ? '' : '分享链接过长，请缩短文案或下载海报。';
+  const canvas = $('poster-canvas');
+  const base = new URL(location.href);
+  base.hash = ''; base.search = '';
+  const local = ['localhost', '127.0.0.1', '[::1]'].includes(base.hostname) || base.protocol === 'file:';
+  $('share-host-note').textContent = local ? '本地链接仅供本机测试。发布新版后，请从公开站点生成链接。' : '收到链接的人可以查看这份收藏快照和文案。';
+  preparedFile = null;
+  posterBlob = null;
+  $('download-poster').disabled = false;
+  try {
+    drawPoster(canvas, draft, posterSizes[$('poster-size').value] ?? posterSizes['1080x1350'], local ? publicSite : base.href);
+    posterBlob = new Promise(resolve => {
+      try { canvas.toBlob(resolve, 'image/png'); }
+      catch { resolve(null); }
+    }).then(blob => {
+      if (revision === posterRevision && blob && typeof File === 'function') {
+        preparedFile = new File([blob], 'vinyl-room-collection.png', { type: 'image/png' });
+      }
+      return blob;
+    });
+  } catch {
+    $('share-action-status').textContent = '海报生成失败，请重新打开分享后重试。';
+    $('download-poster').disabled = true;
+  }
+}
+
+$('open-share').addEventListener('click', () => {
+  shareDraft = [...savedAlbums].sort((a, b) => b[1] - a[1]).slice(0, shareLimit).map(([id]) => id);
+  if (!shareDraft.length) return;
+  $('share-count').textContent = shareDraft.length + ' 张专辑 · 原创文字海报';
+  updateShareDraft();
+  shareDialog.showModal();
+});
+$('poster-size').addEventListener('change', updateShareDraft);
+$('share-caption').addEventListener('input', updateShareDraft);
+
+$('download-poster').addEventListener('click', async () => {
+  const revision = posterRevision;
+  const blob = await posterBlob;
+  if (revision !== posterRevision) return;
+  if (!blob) {
+    $('share-action-status').textContent = 'PNG 导出失败，请切换尺寸或重新打开分享后重试。';
+    return;
+  }
+  try {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'vinyl-room-collection.png';
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+    $('share-action-status').textContent = 'PNG 海报已准备下载。';
+  } catch {
+    $('share-action-status').textContent = '无法发起下载，请点 Download Poster 重试。';
+  }
+});
+
+$('copy-share').addEventListener('click', async () => {
+  const input = $('share-url');
+  if (!input.value) return;
+  try {
+    await navigator.clipboard.writeText(input.value);
+    $('share-action-status').textContent = '分享链接已复制。';
+  } catch {
+    input.focus();
+    input.select();
+    let copied = false;
+    try { copied = document.execCommand('copy'); } catch {}
+    $('share-action-status').textContent = copied ? '分享链接已复制。' : '链接已选中，请手动复制。';
+  }
+});
+
+$('native-share').addEventListener('click', async () => {
+  const url = $('share-url').value;
+  if (!url || typeof navigator.share !== 'function') return;
+  const data = { title: 'Taylor Swift Vinyl Room', text: cleanCaption($('share-caption').value), url };
+  try {
+    const files = preparedFile ? [preparedFile] : [];
+    if (files.length && navigator.canShare?.({ ...data, files })) data.files = files;
+    await navigator.share(data);
+    $('share-action-status').textContent = '分享已完成。';
+  } catch (error) {
+    if (error.name !== 'AbortError') $('share-action-status').textContent = '原生分享不可用，请复制链接或下载海报。';
+  }
+});
+
+const tracklistCache = new Map();
+const tracklistPending = new Map();
+let detailAlbumId = null;
+let detailRequest = 0;
+let detailTrackRows = new Map();
+let firstPlayableTrack = null;
+let exploreScroll = 0;
+
+function loadTracklist(album, refresh = false) {
+  if (tracklistPending.has(album.id)) return tracklistPending.get(album.id);
+  if (!refresh && tracklistCache.has(album.id)) return Promise.resolve(tracklistCache.get(album.id));
+  const pending = (async () => {
+    const controller = new AbortController();
+    const ids = [...(album.appleCollectionAliases ?? []), album.collectionId].filter(Boolean);
+    for (const collectionId of ids) {
+      const rows = await getResults('/lookup', { id: collectionId, limit: '200' }, controller.signal);
+      const header = rows.find(row => row.wrapperType === 'collection' && Number(row.collectionId) === collectionId);
+      const songs = new Map();
+      for (const row of rows) {
+        if (row.kind !== 'song' || Number(row.collectionId) !== collectionId || row.trackId == null || !row.trackName) continue;
+        const trackId = String(row.trackId);
+        songs.set(trackId, {
+          trackId, trackName: row.trackName,
+          trackNumber: Number.isInteger(row.trackNumber) && row.trackNumber > 0 ? row.trackNumber : null,
+          discNumber: Number.isInteger(row.discNumber) && row.discNumber > 0 ? row.discNumber : 1,
+          trackTimeMillis: Number.isFinite(row.trackTimeMillis) && row.trackTimeMillis >= 0 ? row.trackTimeMillis : null,
+          previewUrl: appleUrl(row.previewUrl), storeUrl: appleUrl(row.trackViewUrl),
+        });
+      }
+      if (songs.size) {
+        const tracks = [...songs.values()].sort((a, b) =>
+          a.discNumber - b.discNumber || (a.trackNumber ?? Infinity) - (b.trackNumber ?? Infinity));
+        const declaredCount = Number.isInteger(header?.trackCount) && header.trackCount > 0 ? header.trackCount : null;
+        const result = { tracks, declaredCount };
+        tracklistCache.set(album.id, result);
+        return result;
+      }
+    }
+    throw new Error('No tracks returned');
+  })().finally(() => tracklistPending.delete(album.id));
+  tracklistPending.set(album.id, pending);
+  return pending;
+}
+
+function paintDetailCover(album, image) {
+  if (pageView !== 'album' || detailAlbumId !== album.id || $('detail-cover').querySelector('img')) return;
+  const img = image.cloneNode();
+  img.alt = album.title + ' album cover';
+  img.addEventListener('error', () => img.remove(), { once: true });
+  $('detail-cover').append(img);
+}
+
+function syncDetailPlayback() {
+  if (pageView !== 'album') return;
+  const labels = { ready: '已选中', fetching: '正在获取', loading: '正在加载', playing: '正在播放',
+    paused: '已暂停', ended: '试听结束', failed: '播放失败' };
+  for (const [id, { row, button, track }] of detailTrackRows) {
+    const selected = detailAlbumId === selectedId && id === selectedTrackId;
+    row.dataset.selected = String(selected);
+    button.setAttribute('aria-pressed', String(selected));
+    button.textContent = !track.previewUrl ? '不可试听' : selected ? labels[playerState] ?? '已选中' : '选择试听';
+  }
+}
+
+function formatDuration(millis) {
+  if (millis === null) return '—';
+  const seconds = Math.floor(millis / 1000);
+  return Math.floor(seconds / 60) + ':' + String(seconds % 60).padStart(2, '0');
+}
+
+function showTracklist(album, result) {
+  const { tracks, declaredCount } = result;
+  firstPlayableTrack = tracks.find(track => track.previewUrl) ?? null;
+  $('play-album').disabled = !firstPlayableTrack;
+  const partial = declaredCount !== null && tracks.length < declaredCount;
+  const available = '已获取 ' + tracks.length + ' 首歌曲';
+  $('detail-status').textContent = available +
+    (partial ? '（Apple 目录标示 ' + declaredCount + ' 项，可能含非歌曲内容；此处仅显示返回的歌曲）' : '') +
+    (firstPlayableTrack ? '。选择曲目后，在底部点击播放。' : '。这张专辑目前没有可试听的曲目。');
+  $('detail-meta').textContent += ' · ' + tracks.length + ' 首歌曲';
+  for (const track of tracks) {
+    const row = document.createElement('li');
+    row.className = 'detail-row';
+    row.dataset.trackId = track.trackId;
+    const number = document.createElement('span');
+    number.textContent = track.trackNumber == null ? '—' : (track.discNumber > 1 ? track.discNumber + '.' : '') + track.trackNumber;
+    const name = document.createElement('span');
+    name.className = 'track-name';
+    name.textContent = track.trackName;
+    const duration = document.createElement('span');
+    duration.className = 'track-duration';
+    duration.textContent = formatDuration(track.trackTimeMillis);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'detail-action track-select';
+    button.disabled = !track.previewUrl;
+    button.setAttribute('aria-label', (track.previewUrl ? '选择试听 ' : '不可试听 ') + track.trackName);
+    button.addEventListener('click', () => playAlbum(playbackById.get(album.id), false, track));
+    row.append(number, name, duration, button);
+    $('detail-list').append(row);
+    detailTrackRows.set(track.trackId, { row, button, track });
+  }
+  syncDetailPlayback();
+}
+
+async function renderDetail(focusHeading = false, refresh = false) {
+  const current = ++detailRequest;
+  const album = catalogById.get(detailAlbumId);
+  $('detail-content').hidden = !album;
+  $('detail-missing').hidden = Boolean(album);
+  $('album-detail').setAttribute('aria-labelledby', album ? 'detail-title' : 'detail-missing-title');
+  if (!album) {
+    if (focusHeading) $('detail-missing-title').focus({ preventScroll: true });
+    return;
+  }
+  const reRecorded = album.category === 're-recorded';
+  $('detail-version').textContent = reRecorded ? "TAYLOR'S VERSION" : 'STUDIO ALBUM';
+  $('detail-title').textContent = album.title;
+  if (focusHeading) $('detail-title').focus({ preventScroll: true });
+  $('detail-meta').textContent = [album.releaseYear, album.originalTitle + ' era',
+    reRecorded ? '原版：' + album.originalTitle : null].filter(Boolean).join(' · ');
+  $('detail-intro').textContent = album.description ?? '';
+  const store = officialAlbumUrl(album);
+  $('detail-store').hidden = !store;
+  if (store) $('detail-store').href = store;
+  paintFavorite($('detail-favorite'), album, true);
+  $('detail-cover').textContent = 'TS';
+  $('detail-cover').style.setProperty('--cover', album.color === null ? '#a18a9c' : '#' + album.color.toString(16).padStart(6, '0'));
+  const image = coverCache.get(album.id);
+  if (image) paintDetailCover(album, image);
+  else void loadCover(playbackById.get(album.id), 3);
+  $('detail-list').replaceChildren();
+  detailTrackRows = new Map();
+  firstPlayableTrack = null;
+  $('play-album').disabled = true;
+  $('detail-retry').hidden = true;
+  $('detail-status').textContent = '正在从 Apple 加载曲目…';
+  try {
+    const result = await loadTracklist(album, refresh);
+    if (current === detailRequest && pageView === 'album') showTracklist(album, result);
+  } catch (error) {
+    if (current !== detailRequest || pageView !== 'album') return;
+    $('detail-status').textContent = error.name === 'TimeoutError' ? '曲目请求超时，请重试。'
+      : error.message === 'No tracks returned' ? 'Apple 暂未返回此版本的曲目。可重试或前往 Apple Music。'
+      : '曲目加载失败，请重试。';
+    $('detail-retry').hidden = false;
+  }
+}
+$('detail-retry').addEventListener('click', () => renderDetail(false, true));
+$('detail-favorite').addEventListener('click', () => toggleFavorite(detailAlbumId));
+$('play-album').addEventListener('click', () => {
+  if (firstPlayableTrack) playAlbum(playbackById.get(detailAlbumId), true, firstPlayableTrack);
+});
+
+let collectionScroll = 0;
+let shareRouteHash = '';
+function syncPage(focusHeading = false) {
+  const previousPage = pageView;
+  if (previousPage === 'explore') exploreScroll = $('explore').scrollTop;
+  if (previousPage === 'collection') collectionScroll = $('collection').scrollTop;
+  const hash = location.hash;
+  pageView = hash.startsWith('#album/') ? 'album' : hash.startsWith('#share/') ? 'share' :
+    hash === '#explore' ? 'explore' : hash === '#collection' ? 'collection' : 'home';
+  const exploring = pageView === 'explore';
+  const detailing = pageView === 'album';
+  const collecting = pageView === 'collection';
+  const sharing = pageView === 'share';
+  if (!collecting && shareDialog.open) shareDialog.close();
+  if (detailing) {
+    try { detailAlbumId = decodeURIComponent(hash.slice(7)); }
+    catch { detailAlbumId = null; }
+    if (previousPage === 'collection' && catalogById.has(detailAlbumId)) {
+      history.replaceState({ ...history.state, albumBack: 'collection' }, '');
+    } else if (previousPage === 'share' && sharedSnapshot && catalogById.has(detailAlbumId)) {
+      history.replaceState({ ...history.state, albumBack: 'share', shareBack: shareRouteHash }, '');
+    }
+  } else detailRequest++;
+  const fromCollection = detailing && history.state?.albumBack === 'collection';
+  const shareBack = detailing && history.state?.albumBack === 'share' &&
+    /^#share\/[A-Za-z0-9_-]{1,1900}$/.test(history.state.shareBack) ? history.state.shareBack : null;
+  $('detail-back').href = fromCollection ? '#collection' : shareBack ?? '#explore';
+  $('detail-back').textContent = fromCollection ? '← Back to My Collection' :
+    shareBack ? '← Back to Shared Collection' : '← Back to Explore';
+  document.querySelector('.room').dataset.page = pageView;
+  $('home').hidden = pageView !== 'home';
+  $('explore').hidden = !exploring;
+  $('collection').hidden = !collecting;
+  $('share').hidden = !sharing;
+  $('album-detail').hidden = !detailing;
+  $('home-navigation').hidden = pageView !== 'home';
+  const nav = sharing ? '' : pageView === 'home' ? 'home' : collecting || fromCollection ? 'collection' : 'explore';
+  for (const route of ['home', 'explore', 'collection']) {
+    if (route === nav) $('nav-' + route).setAttribute('aria-current', 'page');
+    else $('nav-' + route).removeAttribute('aria-current');
+  }
+  if (!collecting) collectionObserver?.disconnect();
+  if (!sharing) sharedObserver?.disconnect();
+  const hint = $('storage-feedback');
+  hint.hidden = !collectionStorageNote || collecting;
+  hint.textContent = collectionStorageNote;
+  if (exploring) {
+    clearTimeout(nearbyTimer);
+    coverQueue.prune(new Set([selectedId]));
+    previewQueue.prune(new Set([selectedId]));
+    renderExplore();
+    $('explore').scrollTop = exploreScroll;
+    if (focusHeading) $('explore-title').focus({ preventScroll: true });
+  } else if (collecting) {
+    clearTimeout(nearbyTimer);
+    exploreObserver?.disconnect();
+    previewQueue.prune(new Set([selectedId]));
+    renderCollection();
+    $('collection').scrollTop = collectionScroll;
+    if (focusHeading) $('collection-title').focus({ preventScroll: true });
+  } else if (sharing) {
+    clearTimeout(nearbyTimer);
+    exploreObserver?.disconnect();
+    previewQueue.prune(new Set([selectedId]));
+    shareRouteHash = hash;
+    $('share').scrollTop = 0;
+    renderShared(hash.slice(7), focusHeading);
+  } else if (detailing) {
+    clearTimeout(nearbyTimer);
+    exploreObserver?.disconnect();
+    coverQueue.prune(new Set([selectedId, detailAlbumId]));
+    previewQueue.prune(new Set([selectedId]));
+    $('album-detail').scrollTop = 0;
+    void renderDetail(focusHeading);
+  } else {
+    exploreObserver?.disconnect();
+    coverQueue.prune(new Set([selectedId, albums[visibleIndex].id]));
+    const album = homeById.get(selectedId);
+    if (album && album.index !== visibleIndex) view.reveal?.(album.index);
+    setBrowseIndex(visibleIndex);
+    syncHomeSelection();
+  }
+  view.visibility?.();
+}
+window.addEventListener('hashchange', () => syncPage(true));
+
+function showFlat() {
+  const frame = document.createElement('div');
+  frame.className = 'flat';
+  const bar = document.createElement('div');
+  bar.className = 'flat-bar';
+  const status = document.createElement('span');
+  status.setAttribute('role', 'status');
+  status.textContent = '正在使用基础展示模式';
+  const reload = document.createElement('button');
+  reload.type = 'button';
+  reload.className = 'flat-retry';
+  reload.textContent = '重新加载 3D';
+  reload.addEventListener('click', () => location.reload());
+  bar.append(status, reload);
+  const grid = document.createElement('div');
+  grid.className = 'flat-grid';
+  grid.setAttribute('aria-label', '全部唱片');
+  const cards = albums.map(album => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'flat-card';
+    card.dataset.albumId = album.id;
+    card.setAttribute('aria-label', album.title);
+    const cover = document.createElement('span');
+    cover.className = 'flat-cover';
+    cover.style.setProperty('--cover', '#' + album.color.toString(16).padStart(6, '0'));
+    cover.textContent = 'TS';
+    cover.setAttribute('aria-hidden', 'true');
+    const name = document.createElement('span');
+    name.className = 'flat-name';
+    name.textContent = album.title;
+    card.append(cover, name);
+    card.addEventListener('click', () => {
+      setBrowseIndex(album.index);
+      playAlbum(album);
+    });
+    card.addEventListener('focus', () => { void loadCover(album, 2); });
+    grid.append(card);
+    return card;
+  });
+  let scrollTimer;
+  grid.addEventListener('scroll', () => {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      const bounds = grid.getBoundingClientRect();
+      const isVisible = card => {
+        const rect = card.getBoundingClientRect();
+        return rect.top < bounds.bottom - 20 && rect.bottom > bounds.top + 20;
+      };
+      if (isVisible(cards[visibleIndex])) return;
+      const index = cards.findIndex(isVisible);
+      if (index >= 0) setBrowseIndex(index);
+    }, 120);
+  }, { passive: true });
+  frame.append(bar, grid);
+  stageHost.replaceChildren(frame);
+  stageHost.closest('.stage').setAttribute('aria-label', '唱片展区 · 基础展示模式');
+  document.querySelector('.masthead-title p').textContent = '浏览展架 · 点击唱片试听';
+  notice.hidden = true;
+  view = {
+    browse(direction) {
+      setBrowseIndex(visibleIndex + direction);
+      cards[visibleIndex].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    },
+    browsed(index) {
+      cards.forEach((card, i) => card.setAttribute('aria-current', String(i === index)));
+    },
+    select(id) {
+      cards.forEach(card => card.setAttribute('aria-pressed', String(card.dataset.albumId === id)));
+    },
+    reveal(index) {
+      setBrowseIndex(index);
+      const card = cards[index];
+      if (card) card.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    },
+    cover(album, image) {
+      cards[album.index]?.firstElementChild.append(image);
+    },
+  };
+  view.select(selectedId);
+  for (const album of albums) {
+    const image = coverCache.get(album.id);
+    if (image) view.cover(album, image);
+  }
+  setBrowseIndex(visibleIndex);
+}
+
+function syncPlaybackAfterVisibility() {
+  if (document.hidden) {
+    clearTimeout(nearbyTimer);
+    coverQueue.prune(new Set());
+    previewQueue.prune(new Set([selectedId]));
+  } else {
+    updateProgress();
+    if (audio?.ended) finishPreview();
+    else if (playerState === 'playing' && audio.paused) setPlayerState('paused');
+    schedulePreviewLimit();
+    coverQueue.pump();
+    previewQueue.pump();
+    if (pageView === 'explore') {
+      for (const id of nearbyExploreIds) queueExploreCover(catalogById.get(id));
+    } else if (pageView === 'collection') {
+      for (const id of nearbyCollectionIds) queueExploreCover(catalogById.get(id));
+    } else if (pageView === 'share') {
+      for (const id of nearbySharedIds) queueExploreCover(catalogById.get(id));
+    } else setBrowseIndex(visibleIndex);
+  }
+  view.visibility?.();
+}
+document.addEventListener('visibilitychange', syncPlaybackAfterVisibility);
+window.addEventListener('pageshow', event => { if (event.persisted) syncPlaybackAfterVisibility(); });
+
 function init(THREE) {
-  const albums = [
-    { title: 'Fearless', color: 0xc18b4f, collectionId: 1440924803 },
-    { title: 'Speak Now', color: 0x926fb5, collectionId: 1440920310 },
-    { title: 'Red', color: 0xb93c54, collectionId: 1440935340 },
-    { title: '1989', color: 0x86b3c1, collectionId: 1445888258 },
-    { title: 'Reputation', color: 0xa3a0b4, collectionId: 1440933849 },
-    { title: 'Lover', color: 0xd796b5, collectionId: 1468058165 },
-    { title: 'Folklore', color: 0xbdb5a7, collectionId: 1524801260 },
-    { title: 'Evermore', color: 0xb87c60, collectionId: 1544275966 },
-    { title: 'Midnights', color: 0x748ec8, collectionId: 1645937249 },
-    { title: 'The Life of a Showgirl', color: 0xd78360, collectionId: 1838810949 },
-  ].map((album, index) => ({ ...album, index, preview: null }));
   const host = $('stage');
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
   const canvas = renderer.domElement;
   canvas.tabIndex = 0;
   canvas.setAttribute('aria-label', '3D 黑胶展架。左右方向键浏览，回车播放展架中央的唱片');
   host.append(canvas);
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.6));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, matchMedia('(pointer: coarse)').matches ? 1.35 : 1.6));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
@@ -126,7 +1964,6 @@ function init(THREE) {
   const radius = 6.35;
   const models = [];
   const hitMeshes = [];
-  const textureLoader = new THREE.TextureLoader();
 
   scene.add(new THREE.AmbientLight(0xdcc4ef, .62));
   const key = new THREE.DirectionalLight(0xffead6, 2.4);
@@ -285,171 +2122,14 @@ function init(THREE) {
     models.push({ album, paper, vinyl, spindle, playback });
   });
 
-  const pendingPreviews = new Map();
-  function appleUrl(value) {
-    try {
-      const url = new URL(value);
-      if (url.protocol === 'https:' && /(^|\.)(apple\.com|mzstatic\.com|apple\.co)$/i.test(url.hostname)) return url.href;
-    } catch {}
-    return '';
-  }
-
-  async function getResults(endpoint, params) {
-    const url = new URL(endpoint, 'https://itunes.apple.com');
-    url.search = new URLSearchParams({ ...params, media: 'music', entity: 'song', country: 'US' });
-    const response = await fetch(url, { signal: AbortSignal.timeout(9000) });
-    if (!response.ok) throw new Error('iTunes HTTP ' + response.status);
-    const data = await response.json();
-    return Array.isArray(data.results) ? data.results : [];
-  }
-
-  async function fetchPreview(album) {
-    const playable = song => song.kind === 'song' && song.artistName === 'Taylor Swift' &&
-      song.trackName && appleUrl(song.previewUrl);
-    const exactId = song => playable(song) && Number(song.collectionId) === album.collectionId;
-    const sameEdition = song => playable(song) &&
-      song.collectionName?.trim().toLowerCase() === album.title.toLowerCase();
-    const results = await getResults('/search', {
-      term: 'Taylor Swift ' + album.title, attribute: 'albumTerm', limit: '25',
-    });
-    // An exact ID lookup handles search results crowded out by deluxe or re-recorded editions.
-    const song = results.find(exactId) ?? results.find(sameEdition) ??
-      (await getResults('/lookup', { id: album.collectionId, limit: '30' })).find(exactId);
-    if (!song) throw new Error('该发行版本暂无官方试听');
-    const originalArtwork = appleUrl(song.artworkUrl100);
-    return {
-      previewUrl: appleUrl(song.previewUrl),
-      trackName: song.trackName,
-      artworkUrl: originalArtwork.replace(/\/\d+x\d+([^/]*)$/i, '/600x600$1'),
-      originalArtwork,
-      storeUrl: appleUrl(song.trackViewUrl) || appleUrl(song.collectionViewUrl),
-    };
-  }
-
-  async function updateArtwork(album, preview) {
-    if (!preview.artworkUrl) return;
-    const texture = await textureLoader.loadAsync(preview.artworkUrl)
-      .catch(() => textureLoader.loadAsync(preview.originalArtwork));
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = groove.anisotropy;
-    const { paper } = models[album.index];
-    const old = paper.map;
-    paper.map = paper.emissiveMap = texture;
-    paper.needsUpdate = true;
-    old.dispose();
-  }
-
-  function loadPreview(album) {
-    if (album.preview) return Promise.resolve(album.preview);
-    if (!pendingPreviews.has(album.index)) {
-      const pending = fetchPreview(album).then(preview => {
-        album.preview = preview;
-        updateArtwork(album, preview).catch(() => {});
-        return preview;
-      }).finally(() => pendingPreviews.delete(album.index));
-      pendingPreviews.set(album.index, pending);
-    }
-    return pendingPreviews.get(album.index);
-  }
-
-  const audio = new Audio();
-  audio.preload = 'none';
-  audio.volume = .64;
-  const maxPreviewSeconds = 30;
-  let selected = -1;
-  let request = 0;
-  let spinning = false;
-  let loading = false;
-  const paintAudio = (active, status, canPause = active) => {
-    spinning = active;
-    $('play').textContent = canPause ? 'Ⅱ' : '▶';
-    $('play').setAttribute('aria-label', canPause ? '暂停' : '播放');
-    $('state').textContent = status;
-  };
-  async function playAlbum(album) {
-    const id = ++request;
-    if (selected !== album.index) {
-      audio.pause();
-      selected = album.index;
-      $('progress').style.width = '0%';
-    }
-    $('play').disabled = false;
-    loading = true;
-    $('track').textContent = '加载中...';
-    $('art').hidden = true;
-    $('store').href = 'https://itunes.apple.com/us/album/id' + album.collectionId;
-    paintAudio(false, album.title + ' · 正在获取官方试听', true);
-    try {
-      const preview = album.preview ?? await loadPreview(album);
-      if (id !== request) return;
-      loading = false;
-      $('track').textContent = preview.trackName;
-      $('art').hidden = !preview.artworkUrl;
-      if (preview.artworkUrl) $('art').src = preview.artworkUrl;
-      if (preview.storeUrl) $('store').href = preview.storeUrl;
-      if (audio.src !== preview.previewUrl) audio.src = preview.previewUrl;
-      if (audio.ended || audio.currentTime >= maxPreviewSeconds) audio.currentTime = 0;
-      paintAudio(!audio.paused && audio.readyState >= 3, album.title + ' · iTunes 官方试听', true);
-      await audio.play();
-    } catch (error) {
-      if (id !== request || error.name === 'AbortError') return;
-      loading = false;
-      $('track').textContent = album.preview?.trackName ?? album.title;
-      const message = error.name === 'NotAllowedError' ? '点击播放按钮开始试听'
-        : error.message === '该发行版本暂无官方试听' ? error.message : '试听加载失败，点击重试';
-      paintAudio(false, message);
-    }
-  }
-  audio.addEventListener('playing', () => paintAudio(true, albums[selected].title + ' · iTunes 官方试听'));
-  audio.addEventListener('waiting', () => {
-    if (!loading && !audio.paused) paintAudio(false, '正在缓冲试听…', true);
-  });
-  audio.addEventListener('pause', () => {
-    if (!loading && audio.paused && !audio.ended && audio.src === albums[selected]?.preview?.previewUrl) {
-      paintAudio(false, '已暂停 · iTunes 官方试听');
-    }
-  });
-  function advancePreview() {
-    if (loading || selected < 0 || audio.src !== albums[selected].preview?.previewUrl) return;
-    const next = (selected + 1) % albums.length;
-    const rotation = -next * step;
-    target = rotation + Math.round((shown - rotation) / TAU) * TAU;
-    hover(-1);
-    playAlbum(albums[next]);
-  }
-  audio.addEventListener('ended', advancePreview);
-  audio.addEventListener('error', () => {
-    if (!loading) paintAudio(false, '试听加载失败，点击重试');
-  });
-  audio.addEventListener('timeupdate', () => {
-    if (loading || selected < 0 || audio.src !== albums[selected].preview?.previewUrl) return;
-    if (Number.isFinite(audio.duration) && audio.duration > 0) {
-      const duration = Math.min(audio.duration, maxPreviewSeconds);
-      $('progress').style.width = Math.min(100, audio.currentTime / duration * 100) + '%';
-      if (audio.duration > maxPreviewSeconds && audio.currentTime >= maxPreviewSeconds && !audio.paused) {
-        advancePreview();
-      }
-    }
-  });
-  $('play').addEventListener('click', () => {
-    if (loading || !audio.paused) {
-      request++;
-      loading = false;
-      audio.pause();
-      $('track').textContent = albums[selected].preview?.trackName ?? albums[selected].title;
-      paintAudio(false, '已暂停 · iTunes 官方试听');
-    }
-    else if (selected >= 0) playAlbum(models[selected].playback);
-  });
-
   let target = 0;
   let shown = 0;
   let hovered = -1;
   let drag = null;
-  let visibleIndex = 0;
   const pointer = new THREE.Vector2();
   const ray = new THREE.Raycaster();
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const hoverChanges = new Set();
   function pick(event) {
     const bounds = canvas.getBoundingClientRect();
     if (event.clientX < bounds.left || event.clientX > bounds.right ||
@@ -460,16 +2140,19 @@ function init(THREE) {
     return ray.intersectObjects(hitMeshes, false)[0]?.object.userData ?? null;
   }
   function hover(index) {
+    if (hovered === index) return;
+    if (hovered >= 0) hoverChanges.add(hovered);
+    if (index >= 0) hoverChanges.add(index);
     hovered = index;
     canvas.classList.toggle('pickable', index >= 0);
+    wake();
   }
   const snap = angle => Math.round(angle / step) * step;
   function browse(direction) {
     target = snap(target) - direction * step;
     hover(-1);
+    wake();
   }
-  $('prev').addEventListener('click', () => browse(-1));
-  $('next').addEventListener('click', () => browse(1));
   canvas.addEventListener('keydown', event => {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       event.preventDefault();
@@ -504,6 +2187,7 @@ function init(THREE) {
     drag.velocity = delta / Math.max(8, event.timeStamp - drag.time);
     drag.x = event.clientX;
     drag.time = event.timeStamp;
+    wake();
   });
   function endPointer(event, cancelled) {
     if (!drag || drag.id !== event.pointerId) return;
@@ -514,6 +2198,7 @@ function init(THREE) {
       const quick = event.timeStamp - last.time < 95;
       const inertia = quick && !motion.matches ? THREE.MathUtils.clamp(last.velocity * 105, -1.12, 1.12) : 0;
       target = snap(target + inertia);
+      wake();
     } else if (!cancelled) {
       const hit = pick(event);
       if (hit) playAlbum(hit);
@@ -531,60 +2216,141 @@ function init(THREE) {
     target -= THREE.MathUtils.clamp(delta * units, -140, 140) * .005;
     hover(-1);
     clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(() => { target = snap(target); }, 120);
+    wheelTimer = setTimeout(() => { target = snap(target); wake(); }, 120);
+    wake();
   }, { passive: false });
 
   function resize() {
     const width = host.clientWidth;
     const height = host.clientHeight;
+    if (!width || !height) return;
+
+    // Frame the front sleeve and its exposed disc inside the stage itself.
+    // Wide stages show the ring; narrow stages keep the centered album intact.
+    const compact = width < 720;
     camera.aspect = width / height;
-    camera.fov = camera.aspect < .75 ? 47 : 36;
-    camera.position.set(0, 4.15, camera.aspect < .75 ? 18.1 : 16.35);
-    camera.lookAt(0, 1.60, 3.0);
+    camera.fov = compact ? 40 : 36;
+    const halfVertical = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    const desiredWidth = compact ? 4.95 : 12.6;
+    const fitDistance = desiredWidth / (2 * halfVertical * camera.aspect);
+    const frontDistance = Math.max(compact ? 5.9 : 8.6, fitDistance);
+    camera.position.set(0, 1.56 + frontDistance * .18, radius + frontDistance);
+    camera.lookAt(0, 1.56, radius);
     camera.updateProjectionMatrix();
     renderer.setSize(width, height, false);
+    wake();
   }
-  new ResizeObserver(resize).observe(host);
-  resize();
   let previousFrame = performance.now();
-  renderer.setAnimationLoop(now => {
+  let frameId = null;
+  let contextLost = false;
+  function stopRendering() {
+    if (frameId !== null) cancelAnimationFrame(frameId);
+    frameId = null;
+  }
+  function wake() {
+    if (frameId !== null || document.hidden || contextLost || pageView !== 'home') return;
+    previousFrame = performance.now();
+    frameId = requestAnimationFrame(renderFrame);
+  }
+  function renderFrame(now) {
+    frameId = null;
     const dt = Math.min(.06, (now - previousFrame) / 1000);
     previousFrame = now;
     shown = motion.matches ? target : THREE.MathUtils.damp(shown, target, drag?.moved ? 21 : 8, dt);
+    if (Math.abs(shown - target) < .0005) shown = target;
     ring.rotation.y = shown;
     const slot = ((Math.round(-shown / step) % albums.length) + albums.length) % albums.length;
-    if (slot !== visibleIndex) {
-      visibleIndex = slot;
-      $('counter').textContent = String(slot + 1).padStart(2, '0') + ' / ' + albums.length;
-    }
-    models.forEach(({ album, paper, vinyl, spindle }, index) => {
+    if (slot !== visibleIndex) setBrowseIndex(slot);
+    for (const index of hoverChanges) {
+      const { album, paper, vinyl } = models[index];
       const bright = hovered === index;
-      const scale = THREE.MathUtils.damp(album.scale.x, bright ? 1.05 : 1, 14, dt);
-      album.scale.setScalar(scale);
-      paper.emissiveIntensity = THREE.MathUtils.damp(paper.emissiveIntensity, bright ? .31 : .035, 14, dt);
-      vinyl.emissiveIntensity = THREE.MathUtils.damp(vinyl.emissiveIntensity, bright ? .14 : .008, 14, dt);
-      if (spinning && index === selected) spindle.rotation.z -= dt * TAU * (33.33 / 60);
-    });
-    renderer.render(scene, camera);
-  });
-  canvas.addEventListener('webglcontextlost', () => {
-    notice.textContent = '浏览器暂停了 3D 渲染，请刷新恢复。';
-    notice.hidden = false;
-    audio.pause();
-  });
-  $('prev').disabled = $('next').disabled = false;
-  notice.hidden = true;
-  // Pre-warm the first covers without firing ten requests simultaneously.
-  let nextCover = 0;
-  async function hydrateCovers() {
-    while (nextCover < albums.length) {
-      const album = albums[nextCover++];
-      await loadPreview(album).catch(() => {});
+      const scale = bright ? 1.05 : 1;
+      const paperLight = bright ? .31 : .035;
+      const vinylLight = bright ? .14 : .008;
+      const settled = Math.abs(paper.emissiveIntensity - paperLight) < .001;
+      album.scale.setScalar(settled ? scale : THREE.MathUtils.damp(album.scale.x, scale, 14, dt));
+      paper.emissiveIntensity = settled ? paperLight : THREE.MathUtils.damp(paper.emissiveIntensity, paperLight, 14, dt);
+      vinyl.emissiveIntensity = settled ? vinylLight : THREE.MathUtils.damp(vinyl.emissiveIntensity, vinylLight, 14, dt);
+      if (settled) hoverChanges.delete(index);
     }
+    const playingAlbum = spinning ? homeById.get(selectedId) : null;
+    if (playingAlbum) models[playingAlbum.index].spindle.rotation.z -= dt * TAU * (33.33 / 60);
+    renderer.render(scene, camera);
+    if (shown !== target || hoverChanges.size || playingAlbum) frameId = requestAnimationFrame(renderFrame);
   }
-  void hydrateCovers();
-  void hydrateCovers();
+  view = {
+    browse,
+    draw: wake,
+    visibility: () => document.hidden || pageView !== 'home' ? stopRendering() : wake(),
+    reveal(index) {
+      const angle = -index * step;
+      target = shown = angle + Math.round((shown - angle) / TAU) * TAU;
+      setBrowseIndex(index);
+      wake();
+    },
+    cover(album, image) {
+      const model = models[album.index];
+      if (!model) return;
+      const { paper } = model;
+      const texture = new THREE.Texture(image);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.anisotropy = groove.anisotropy;
+      texture.needsUpdate = true;
+      paper.map.dispose();
+      paper.map = paper.emissiveMap = texture;
+      paper.needsUpdate = true;
+      wake();
+    },
+  };
+  const resizeObserver = new ResizeObserver(resize);
+  resizeObserver.observe(host);
+  resize();
+  for (const album of albums) {
+    const image = coverCache.get(album.id);
+    if (image) view.cover(album, image);
+  }
+  canvas.addEventListener('webglcontextlost', () => {
+    contextLost = true;
+    stopRendering();
+    resizeObserver.disconnect();
+    clearTimeout(wheelTimer);
+    const resources = new Set([groove]);
+    scene.traverse(object => {
+      if (object.geometry) resources.add(object.geometry);
+      for (const material of [object.material].flat().filter(Boolean)) {
+        resources.add(material);
+        if (material.map) resources.add(material.map);
+      }
+    });
+    resources.forEach(resource => resource.dispose());
+    environment.dispose();
+    renderer.dispose();
+    showFlat();
+  });
+  notice.hidden = true;
 }
+
+async function boot() {
+  let timeout;
+  try {
+    const THREE = await Promise.race([
+      import('three'),
+      new Promise((_, reject) => {
+        timeout = setTimeout(() => reject(new Error('Three.js loading timed out')), 5000);
+      }),
+    ]);
+    init(THREE);
+  } catch (error) {
+    console.warn('3D unavailable', error);
+    showFlat();
+  } finally {
+    clearTimeout(timeout);
+    $('prev').disabled = $('next').disabled = false;
+    setBrowseIndex(visibleIndex);
+  }
+}
+syncPage();
+void boot();
 </script>
 </body>
 </html>
